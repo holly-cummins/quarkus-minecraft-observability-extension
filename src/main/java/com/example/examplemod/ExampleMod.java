@@ -1,9 +1,12 @@
 package com.example.examplemod;
 
 import com.mojang.logging.LogUtils;
+import net.minecraft.network.chat.TextComponent;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.block.Block;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.RegistryEvent;
+import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.server.ServerStartingEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.InterModComms;
@@ -15,6 +18,7 @@ import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import org.slf4j.Logger;
 
 import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.stream.Collectors;
 
 // The value here should match an entry in the META-INF/mods.toml file
@@ -63,12 +67,33 @@ public class ExampleMod {
         LOGGER.info("HELLO from server starting");
 
         ClassLoader cl = ClassLoader.getSystemClassLoader();
-        
+
         // Switch classloaders to the system classloader, rather than the transformer classloader Forge uses for mod loading
         try {
             Class<?> clazz = cl.loadClass("com.example.examplemod.Listener");
             clazz.getDeclaredConstructor().newInstance();
         } catch (ClassNotFoundException | InstantiationException | InvocationTargetException | IllegalAccessException | NoSuchMethodException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @SubscribeEvent
+    public void onPlayerLogin(PlayerEvent.PlayerLoggedInEvent event) {
+        Player player = event.getPlayer();
+        System.out.println("QUARKCRAFT - Client connected: " + player);
+        player.displayClientMessage(new TextComponent("Hello from the Quarkiverse!"), true);
+
+
+        // To find the class, we need to use the system classloader rather than the TransformingClassLoader Forge uses for mod loading
+        try {
+            ClassLoader cl = ClassLoader.getSystemClassLoader();
+            Class<?> clazz = cl.loadClass("com.example.examplemod.Endpoint");
+            // The signature needs to be an Object because Player would be in a different classloader
+            Method m = clazz.getMethod("setPlayer", Object.class);
+            // Rather inelegant static communication, but it does the job
+            m.invoke(null, new PlayerWrapper(player));
+
+        } catch (ClassNotFoundException | InvocationTargetException | IllegalAccessException | NoSuchMethodException e) {
             e.printStackTrace();
         }
 

@@ -4,16 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="95781813-ccbd-4df4-99d3-ae2c927e6e51" name="Changes" comment="Basic connection to outside world. To use: ./gradlew runServer ; curl -i http://localhost:8080/observability">
-      <change afterPath="$PROJECT_DIR$/.idea/modules/mod.main.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/modules/mod.test.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/examplemod/Application.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/examplemod/Endpoint.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/examplemod/Listener.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+    <list default="true" id="95781813-ccbd-4df4-99d3-ae2c927e6e51" name="Changes" comment="Respond to REST calls by showing information to players in the minecraft world.">
+      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/examplemod/PlayerWrapper.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/examplemod/Endpoint.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/examplemod/Endpoint.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/example/examplemod/ExampleMod.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/examplemod/ExampleMod.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -57,6 +52,7 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
+        <option value="Interface" />
         <option value="Class" />
       </list>
     </option>
@@ -102,6 +98,9 @@
     <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
   </component>
   <component name="RecentsManager">
+    <key name="CreateClassDialog.RecentsKey">
+      <recent name="com.example.examplemod" />
+    </key>
     <key name="CopyClassDialog.RECENTS_KEY">
       <recent name="com.example.examplemod" />
     </key>
@@ -117,7 +116,7 @@
       <updated>1652945124576</updated>
       <workItem from="1652945126330" duration="1809000" />
       <workItem from="1652969858107" duration="5480000" />
-      <workItem from="1653335861435" duration="20350000" />
+      <workItem from="1653335861435" duration="31570000" />
     </task>
     <task id="LOCAL-00001" summary="Ignore generated files">
       <created>1652945553086</created>
@@ -140,7 +139,21 @@
       <option name="project" value="LOCAL" />
       <updated>1653332636474</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="Basic connection to outside world. To use: ./gradlew runServer ; curl -i http://localhost:8080/observability">
+      <created>1653403436186</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1653403436186</updated>
+    </task>
+    <task id="LOCAL-00005" summary="Tidy extra line">
+      <created>1653404085706</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1653404085706</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -162,7 +175,9 @@
     <MESSAGE value="Ignore generated files" />
     <MESSAGE value="IDE files" />
     <MESSAGE value="Basic connection to outside world. To use: ./gradlew runServer ; curl -i http://localhost:8080/observability" />
-    <option name="LAST_COMMIT_MESSAGE" value="Basic connection to outside world. To use: ./gradlew runServer ; curl -i http://localhost:8080/observability" />
+    <MESSAGE value="Tidy extra line" />
+    <MESSAGE value="Respond to REST calls by showing information to players in the minecraft world." />
+    <option name="LAST_COMMIT_MESSAGE" value="Respond to REST calls by showing information to players in the minecraft world." />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
