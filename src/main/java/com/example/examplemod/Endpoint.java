@@ -19,11 +19,14 @@ public class Endpoint {
             try {
                 Method m = player.getClass().getMethod("say", String.class);
                 m.invoke(player, "Ooh look, something happened");
+                return "minecraft world updated";
             } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException e) {
                 e.printStackTrace();
+                return "internal error";
             }
+        } else {
+            return "no player logged in";
         }
-        return "minecraft world updated";
     }
 
     public static void setPlayer(Object newPlayer) {
