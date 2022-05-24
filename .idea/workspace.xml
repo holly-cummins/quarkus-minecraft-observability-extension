@@ -5,11 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="95781813-ccbd-4df4-99d3-ae2c927e6e51" name="Changes" comment="Respond to REST calls by showing information to players in the minecraft world.">
-      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/examplemod/PlayerWrapper.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/example/examplemod/Endpoint.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/examplemod/Endpoint.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/example/examplemod/ExampleMod.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/examplemod/ExampleMod.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/examplemod/PlayerWrapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/examplemod/PlayerWrapper.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -116,7 +115,7 @@
       <updated>1652945124576</updated>
       <workItem from="1652945126330" duration="1809000" />
       <workItem from="1652969858107" duration="5480000" />
-      <workItem from="1653335861435" duration="31570000" />
+      <workItem from="1653335861435" duration="34646000" />
     </task>
     <task id="LOCAL-00001" summary="Ignore generated files">
       <created>1652945553086</created>
@@ -153,7 +152,14 @@
       <option name="project" value="LOCAL" />
       <updated>1653404085706</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="Respond to REST calls by showing information to players in the minecraft world.">
+      <created>1653424334459</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1653424334459</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
