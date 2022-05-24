@@ -63,8 +63,7 @@ public class ExampleMod {
         LOGGER.info("HELLO from server starting");
 
         ClassLoader cl = ClassLoader.getSystemClassLoader();
-
-
+        
         // Switch classloaders to the system classloader, rather than the transformer classloader Forge uses for mod loading
         try {
             Class<?> clazz = cl.loadClass("com.example.examplemod.Listener");
