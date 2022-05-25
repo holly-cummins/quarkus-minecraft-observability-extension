@@ -1,0 +1,4 @@
+build/
+.gradle/
+modded-minecraft/mcmodsrepo/
+/run/
