@@ -1,7 +1,10 @@
 package com.example.examplemod;
 
 import net.minecraft.network.chat.TextComponent;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.animal.Chicken;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.Level;
 
 /**
  * We need a wrapper here because we need something with a simple enough
@@ -18,5 +21,9 @@ public class PlayerWrapper {
 
     public void say(String message) {
         player.displayClientMessage(new TextComponent(message), true);
+        Level level = player.getCommandSenderWorld();
+        Chicken chicken = EntityType.CHICKEN.create(level);
+        chicken.setPos(player.getX(), player.getY(), player.getZ());
+        level.addFreshEntity(chicken);
     }
 }

@@ -4,6 +4,7 @@ import com.mojang.logging.LogUtils;
 import net.minecraft.network.chat.TextComponent;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
@@ -42,7 +43,7 @@ public class ExampleMod {
     private void setup(final FMLCommonSetupEvent event) {
         // some preinit code
         LOGGER.info("HELLO FROM PREINIT");
-        //    LOGGER.info("DIRT BLOCK >> {}", Blocks.DIRT.getRegistryName());
+        LOGGER.info("DIRT BLOCK >> {}", Blocks.DIRT.getRegistryName());
     }
 
     private void enqueueIMC(final InterModEnqueueEvent event) {
@@ -83,6 +84,7 @@ public class ExampleMod {
         System.out.println("QUARKCRAFT - Client connected: " + player);
         player.displayClientMessage(new TextComponent("Hello from the Quarkiverse!"), true);
 
+        PlayerWrapper playerWrapper = new PlayerWrapper(player);
 
         // To find the class, we need to use the system classloader rather than the TransformingClassLoader Forge uses for mod loading
         try {
@@ -91,7 +93,7 @@ public class ExampleMod {
             // The signature needs to be an Object because Player would be in a different classloader
             Method m = clazz.getMethod("setPlayer", Object.class);
             // Rather inelegant static communication, but it does the job
-            m.invoke(null, new PlayerWrapper(player));
+            m.invoke(null, playerWrapper);
 
         } catch (ClassNotFoundException | InvocationTargetException | IllegalAccessException | NoSuchMethodException e) {
             e.printStackTrace();
