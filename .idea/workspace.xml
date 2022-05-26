@@ -4,10 +4,29 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="95781813-ccbd-4df4-99d3-ae2c927e6e51" name="Changes" comment="Apparently every new file makes a workspace change.">
+    <list default="true" id="95781813-ccbd-4df4-99d3-ae2c927e6e51" name="Changes" comment="Move minecraft content to subfolder">
+      <change afterPath="$PROJECT_DIR$/.gradle/7.1.1/fileChanges/last-build.bin" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.gradle/7.1.1/fileHashes/fileHashes.lock" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.gradle/7.1.1/gc.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.gradle/checksums/checksums.lock" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.gradle/vcs-1/gc.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/extension/bar/deployment/pom.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/extension/bar/deployment/src/main/java/foo/bar/deployment/BarProcessor.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/extension/bar/deployment/src/test/java/foo/bar/test/BarDevModeTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/extension/bar/deployment/src/test/java/foo/bar/test/BarTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/extension/bar/integration-tests/pom.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/extension/bar/integration-tests/src/main/java/foo/bar/it/BarResource.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/extension/bar/integration-tests/src/main/resources/application.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/extension/bar/integration-tests/src/test/java/foo/bar/it/BarResourceIT.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/extension/bar/integration-tests/src/test/java/foo/bar/it/BarResourceTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/extension/bar/pom.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/extension/bar/runtime/pom.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/extension/bar/runtime/src/main/resources/META-INF/quarkus-extension.yaml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/quarkus-super-heroes" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/quarkus-todo-app" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules/mod.main.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules/mod.main.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/examplemod/ExampleMod.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/examplemod/ExampleMod.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/examplemod/PlayerWrapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/examplemod/PlayerWrapper.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -76,7 +95,7 @@
     <option name="myRunOnSave" value="true" />
   </component>
   <component name="ProjectId" id="29NEQ2fxCrMjmPZHF8h58CXr8N0" />
-  <component name="ProjectLevelVcsManager">
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
     <ConfirmationsSetting value="2" id="Add" />
   </component>
   <component name="ProjectViewState">
@@ -99,6 +118,10 @@
     <key name="CreateClassDialog.RecentsKey">
       <recent name="com.example.examplemod" />
     </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$" />
+      <recent name="$PROJECT_DIR$/modded-minecraft" />
+    </key>
     <key name="CopyClassDialog.RECENTS_KEY">
       <recent name="com.example.examplemod" />
     </key>
@@ -114,7 +137,8 @@
       <updated>1652945124576</updated>
       <workItem from="1652945126330" duration="1809000" />
       <workItem from="1652969858107" duration="5480000" />
-      <workItem from="1653335861435" duration="35825000" />
+      <workItem from="1653335861435" duration="37429000" />
+      <workItem from="1653572114051" duration="2235000" />
     </task>
     <task id="LOCAL-00001" summary="Ignore generated files">
       <created>1652945553086</created>
@@ -172,7 +196,14 @@
       <option name="project" value="LOCAL" />
       <updated>1653428269993</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="Make an entity appear">
+      <created>1653478863682</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1653478863682</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -198,7 +229,9 @@
     <MESSAGE value="Respond to REST calls by showing information to players in the minecraft world." />
     <MESSAGE value="warn for no-player scenario" />
     <MESSAGE value="Apparently every new file makes a workspace change." />
-    <option name="LAST_COMMIT_MESSAGE" value="Apparently every new file makes a workspace change." />
+    <MESSAGE value="Make an entity appear" />
+    <MESSAGE value="Move minecraft content to subfolder" />
+    <option name="LAST_COMMIT_MESSAGE" value="Move minecraft content to subfolder" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
