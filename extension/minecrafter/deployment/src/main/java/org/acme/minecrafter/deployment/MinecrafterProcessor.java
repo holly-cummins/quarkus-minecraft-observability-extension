@@ -32,7 +32,7 @@ class MinecrafterProcessor {
     }
 
     @BuildStep
-    @Record(ExecutionTime.RUNTIME_INIT)
+    @Record(ExecutionTime.STATIC_INIT)
     LogHandlerBuildItem addLogHandler(final MinecraftLogHandlerMaker maker) {
         return new LogHandlerBuildItem(maker.create());
     }
