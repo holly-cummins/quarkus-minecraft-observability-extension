@@ -1,4 +1,4 @@
-package org.acme.minecrafter.deployment;
+package org.acme.minecrafter.runtime;
 
 import javax.interceptor.AroundInvoke;
 import javax.interceptor.Interceptor;

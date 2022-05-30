@@ -1,4 +1,4 @@
-package org.acme.minecrafter.deployment;
+package org.acme.minecrafter.runtime;
 
 import io.quarkus.runtime.RuntimeValue;
 import io.quarkus.runtime.annotations.Recorder;

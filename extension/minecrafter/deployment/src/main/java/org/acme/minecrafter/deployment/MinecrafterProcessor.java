@@ -8,6 +8,10 @@ import io.quarkus.deployment.annotations.ExecutionTime;
 import io.quarkus.deployment.annotations.Record;
 import io.quarkus.deployment.builditem.FeatureBuildItem;
 import io.quarkus.deployment.builditem.LogHandlerBuildItem;
+import org.acme.minecrafter.runtime.HelloRecorder;
+import org.acme.minecrafter.runtime.MinecraftLog;
+import org.acme.minecrafter.runtime.MinecraftLogHandlerMaker;
+import org.acme.minecrafter.runtime.MinecraftLogInterceptor;
 import org.jboss.jandex.DotName;
 
 import static io.quarkus.deployment.annotations.ExecutionTime.STATIC_INIT;

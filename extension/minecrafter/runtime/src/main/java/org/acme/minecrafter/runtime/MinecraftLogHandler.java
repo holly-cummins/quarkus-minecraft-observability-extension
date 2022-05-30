@@ -1,4 +1,4 @@
-package org.acme.minecrafter.deployment;
+package org.acme.minecrafter.runtime;
 
 import java.util.Arrays;
 import java.util.logging.Handler;
