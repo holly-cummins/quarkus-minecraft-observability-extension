@@ -1,9 +1,10 @@
 package org.acme.minecrafter.deployment;
 
+import java.util.Arrays;
 import java.util.logging.Handler;
 import java.util.logging.LogRecord;
 
-public class LoggUg extends Handler {
+public class MinecraftLogHandler extends Handler {
 
     private String logStreamName;
     private String logGroupName;
@@ -11,14 +12,12 @@ public class LoggUg extends Handler {
 
     // ...
 
-    public LoggUg() {
-
-    }
 
     @Override
     public void publish(LogRecord record) {
 
-        System.out.println("publisheeeeeing" + record);
+        System.out.println("⛏️ [Minecrafter] " + String.format(record.getMessage(), record.getParameters()));
+
     }
 
     @Override
