@@ -21,7 +21,7 @@ public class Listener {
 
         server.deploy(deploymentInfo);
 
-        Undertow.Builder builder = Undertow.builder().addHttpListener(8080, "127.0.0.1");
+        Undertow.Builder builder = Undertow.builder().addHttpListener(8081, "127.0.0.1");
         server.start(builder);
 
     }

@@ -10,8 +10,10 @@ import io.quarkus.deployment.builditem.FeatureBuildItem;
 import io.quarkus.deployment.builditem.LogHandlerBuildItem;
 import org.acme.minecrafter.runtime.HelloRecorder;
 import org.acme.minecrafter.runtime.MinecraftLog;
+import org.acme.minecrafter.runtime.MinecraftLogHandler;
 import org.acme.minecrafter.runtime.MinecraftLogHandlerMaker;
 import org.acme.minecrafter.runtime.MinecraftLogInterceptor;
+import org.acme.minecrafter.runtime.MinecraftService;
 import org.jboss.jandex.DotName;
 
 import static io.quarkus.deployment.annotations.ExecutionTime.STATIC_INIT;
@@ -45,6 +47,18 @@ class MinecrafterProcessor {
         return AdditionalBeanBuildItem.unremovableOf(MinecraftLogInterceptor.class);
     }
 
+    // Nice idea, does not help JAXRS client work
+    @BuildStep
+    AdditionalBeanBuildItem addRestService() {
+        return AdditionalBeanBuildItem.unremovableOf(MinecraftService.class);
+    }
+
+    // Nice idea, does not help JAXRS client work
+    @BuildStep
+    AdditionalBeanBuildItem addLogHandler() {
+        return AdditionalBeanBuildItem.unremovableOf(MinecraftLogHandler.class);
+    }
+
     @BuildStep
     AnnotationsTransformerBuildItem transform() {
         return new AnnotationsTransformerBuildItem(new AnnotationsTransformer() {
@@ -55,6 +69,7 @@ class MinecrafterProcessor {
 
             public void transform(TransformationContext context) {
                 if (context.getTarget().asMethod().hasAnnotation(DotName.createSimple("javax.ws.rs.GET"))) {
+                    System.out.println("HOLLY doiung" + context.getTarget().asMethod().name());
                     context.transform().add(MinecraftLog.class).done();
                 }
             }
