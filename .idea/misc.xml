@@ -12,5 +12,15 @@
   <component name="FrameworkDetectionExcludesConfiguration">
     <file type="web" url="file://$PROJECT_DIR$" />
   </component>
+  <component name="MavenProjectsManager">
+    <option name="originalFiles">
+      <list>
+        <option value="$PROJECT_DIR$/opentelemetry-exporter-minecraft/deployment/pom.xml" />
+        <option value="$PROJECT_DIR$/opentelemetry-exporter-minecraft/pom.xml" />
+        <option value="$PROJECT_DIR$/extension/minecrafter/pom.xml" />
+        <option value="$PROJECT_DIR$/quarkus-todo-app/pom.xml" />
+      </list>
+    </option>
+  </component>
   <component name="ProjectRootManager" version="2" languageLevel="JDK_17" default="true" project-jdk-name="temurin-17" project-jdk-type="JavaSDK" />
 </project>

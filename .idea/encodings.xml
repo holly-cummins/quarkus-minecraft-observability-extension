@@ -13,5 +13,9 @@
     <file url="file://$PROJECT_DIR$/opentelemetry-exporter-minecraft/runtime/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/opentelemetry-exporter-minecraft/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/opentelemetry-exporter-minecraft/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/quarkus-todo-app/quarkus-todo/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/quarkus-todo-app/quarkus-todo/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/quarkus-todo-app/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/quarkus-todo-app/src/main/resources" charset="UTF-8" />
   </component>
 </project>
