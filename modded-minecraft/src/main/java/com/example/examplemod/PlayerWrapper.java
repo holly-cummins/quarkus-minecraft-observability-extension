@@ -3,16 +3,16 @@ package com.example.examplemod;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.TextComponent;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LightningBolt;
 import net.minecraft.world.entity.animal.Chicken;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Explosion;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.event.ForgeEventFactory;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 /**
  * We need a wrapper here because we need something with a simple enough
@@ -27,19 +27,32 @@ public class PlayerWrapper {
         this.player = player;
     }
 
+
     public void say(String message) {
+
+        Vec3 pos = getPositionInFrontOfPlayer(3);
+
         player.displayClientMessage(new TextComponent(message), true);
-        Level level = player.getCommandSenderWorld();
-        Chicken chicken = EntityType.CHICKEN.create(level);
-        chicken.setPos(player.getX(), player.getY(), player.getZ());
-        level.addFreshEntity(chicken);
+
+        Level world = player.getCommandSenderWorld();
+
+        LightningBolt lightning = EntityType.LIGHTNING_BOLT.create(world);
+        lightning.setPos(pos);
+        lightning.setVisualOnly(true);
+        world.addFreshEntity(lightning);
+
+        Chicken chicken = EntityType.CHICKEN.create(world);
+        chicken.setPos(pos);
+        world.addFreshEntity(chicken);
+
+
     }
 
     public void explode(String message) {
         player.displayClientMessage(new TextComponent(message), true);
         Level level = player.getCommandSenderWorld();
         Chicken chicken = EntityType.CHICKEN.create(level);
-        chicken.setPos(player.getX(), player.getY(), player.getZ());
+        chicken.setPos(getPositionInFrontOfPlayer(6));
         level.addFreshEntity(chicken);
 
         Vec3 blockPos = chicken.getPosition(45);
@@ -51,5 +64,16 @@ public class PlayerWrapper {
 
         explosion.explode();
     }
+
+
+    @NotNull
+    private Vec3 getPositionInFrontOfPlayer(int distance) {
+        double x = player.getX() + distance * player.getLookAngle().x;
+        double y = player.getY() + distance * player.getLookAngle().y;
+        double z = player.getZ() + distance * player.getLookAngle().z;
+        Vec3 pos = new Vec3(x, y, z);
+        return pos;
+    }
+
 
 }
