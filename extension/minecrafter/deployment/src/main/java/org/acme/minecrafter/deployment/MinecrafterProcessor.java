@@ -13,8 +13,7 @@ import org.acme.minecrafter.runtime.HelloRecorder;
 import org.acme.minecrafter.runtime.MinecraftLog;
 import org.acme.minecrafter.runtime.MinecraftLogHandlerMaker;
 import org.acme.minecrafter.runtime.MinecraftLogInterceptor;
-import org.acme.minecrafter.runtime.MinecraftService;
-import org.acme.minecrafter.runtime.RestExceptionMapper;
+Tiimport org.acme.minecrafter.runtime.RestExceptionMapper;
 import org.jboss.jandex.DotName;
 
 import javax.ws.rs.Priorities;
@@ -60,7 +59,6 @@ class MinecrafterProcessor {
 
             public void transform(TransformationContext context) {
                 if (context.getTarget().asMethod().hasAnnotation(DotName.createSimple("javax.ws.rs.GET"))) {
-                    System.out.println("HOLLY doiung" + context.getTarget().asMethod().name());
                     context.transform().add(MinecraftLog.class).done();
                 }
             }
