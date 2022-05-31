@@ -11,7 +11,7 @@ cd modded-minecraft
 
 ### Start the minecraft client
 
-You will need the Java edition of Minecraft. Start a multiplayer game, and connect to `localhost:25565`.
+You will need the Java edition of Minecraft. Start a multiplayer game, and connect to `http://localhost:25565`.
 
 You will need to configure the client to allow you to `alt-tab` away from the client without it pausing and bringing up
 a menu. Edit `options.txt` in
@@ -41,5 +41,5 @@ quarkus dev
 
 Arrange your windows so you can see both the minecraft client and the web application.
 Visit [http://localhost:8080](http://localhost:8080). While you're interacting with the web app, you should see things
-happen in the minecraft world. You may need to look around in minecraft, or visit the page several times, because the
-spawned mobs sometimes move away quite quickly.
+happen in the minecraft world. Visiting the page will cause a mob to spawn, and an exception (like a 404) will cause an
+explosion.
