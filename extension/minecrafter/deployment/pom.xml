@@ -19,6 +19,10 @@
             <artifactId>quarkus-rest-client-reactive-jackson-deployment</artifactId>
         </dependency>
         <dependency>
+            <groupId>io.quarkus</groupId>
+            <artifactId>quarkus-resteasy-common-spi</artifactId>
+        </dependency>
+        <dependency>
             <groupId>org.acme</groupId>
             <artifactId>minecrafter</artifactId>
             <version>${project.version}</version>

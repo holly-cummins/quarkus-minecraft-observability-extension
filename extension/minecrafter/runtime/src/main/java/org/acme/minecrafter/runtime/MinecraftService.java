@@ -9,6 +9,9 @@ import java.util.Set;
 public interface MinecraftService {
 
     @GET
-    Set<?> getById(@QueryParam("id") String id);
+    void recordVisit();
+
+    @GET
+    void boom();
 }
 

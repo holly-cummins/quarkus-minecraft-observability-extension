@@ -8,13 +8,17 @@ import io.quarkus.deployment.annotations.ExecutionTime;
 import io.quarkus.deployment.annotations.Record;
 import io.quarkus.deployment.builditem.FeatureBuildItem;
 import io.quarkus.deployment.builditem.LogHandlerBuildItem;
+import io.quarkus.resteasy.reactive.spi.ExceptionMapperBuildItem;
 import org.acme.minecrafter.runtime.HelloRecorder;
 import org.acme.minecrafter.runtime.MinecraftLog;
 import org.acme.minecrafter.runtime.MinecraftLogHandler;
 import org.acme.minecrafter.runtime.MinecraftLogHandlerMaker;
 import org.acme.minecrafter.runtime.MinecraftLogInterceptor;
 import org.acme.minecrafter.runtime.MinecraftService;
+import org.acme.minecrafter.runtime.RestExceptionMapper;
 import org.jboss.jandex.DotName;
+
+import javax.ws.rs.Priorities;
 
 import static io.quarkus.deployment.annotations.ExecutionTime.STATIC_INIT;
 
@@ -74,6 +78,12 @@ class MinecrafterProcessor {
                 }
             }
         });
+    }
+
+    @BuildStep
+    ExceptionMapperBuildItem exceptionMappers() {
+        return new ExceptionMapperBuildItem(RestExceptionMapper.class.getName(),
+                Exception.class.getName(), Priorities.USER + 100, false);
     }
 
 }

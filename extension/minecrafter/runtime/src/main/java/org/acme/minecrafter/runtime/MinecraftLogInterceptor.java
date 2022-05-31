@@ -18,6 +18,7 @@ import java.lang.reflect.Method;
 import java.net.HttpURLConnection;
 import java.net.URI;
 import java.net.URL;
+import java.util.Set;
 
 //import org.eclipse.microprofile.rest.client.inject.RestClient;
 //import org.jboss.resteasy.reactive.client.impl.ClientBuilderImpl;
@@ -32,9 +33,9 @@ public class MinecraftLogInterceptor {
 
 
     @AroundInvoke
-    Object around(InvocationContext context) throws Throwable {
-//        ClientBuilderImpl clientBuilder = new ClientBuilderImpl();
-//        Object thing = clientBuilder.build();
+    Object around(InvocationContext context) throws Exception {
+//       This should be injected, but for now ...
+        MinecraftService minecraft = new HandcraftedMinecraftService();
 
         Method method = context.getMethod();
         // Simple implementation for now
@@ -42,28 +43,11 @@ public class MinecraftLogInterceptor {
                 method.getDeclaringClass().getSimpleName() + "." +
                 method.getName());
 
-
-//        MinecraftService extensionsService = RestClientBuilder.newBuilder()
-//                .baseUri(URI.create("https://stage.code.quarkus.io/api"))
-//                .build(MinecraftService.class);
-
-        URL url = new URL("http://localhost:8081/observability");
-        HttpURLConnection con = (HttpURLConnection) url.openConnection();
-        con.setRequestMethod("GET");
-        BufferedReader in = new BufferedReader(
-                new InputStreamReader(con.getInputStream()));
-        String inputLine;
-        StringBuffer content = new StringBuffer();
-        while ((inputLine = in.readLine()) != null) {
-            content.append(inputLine);
-        }
-        in.close();
-
-        con.disconnect();
-        System.out.println("\uD83D\uDDE1️ [Minecrafter] Mod response: " + content);
+        minecraft.recordVisit();
 
         return context.proceed();
     }
+
 }
 
 
