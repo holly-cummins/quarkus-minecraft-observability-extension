@@ -13,7 +13,7 @@ import org.acme.minecrafter.runtime.HelloRecorder;
 import org.acme.minecrafter.runtime.MinecraftLog;
 import org.acme.minecrafter.runtime.MinecraftLogHandlerMaker;
 import org.acme.minecrafter.runtime.MinecraftLogInterceptor;
-Tiimport org.acme.minecrafter.runtime.RestExceptionMapper;
+import org.acme.minecrafter.runtime.RestExceptionMapper;
 import org.jboss.jandex.DotName;
 
 import javax.ws.rs.Priorities;
