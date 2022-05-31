@@ -1,7 +1,5 @@
 package org.acme.minecrafter.runtime;
 
-import org.eclipse.microprofile.rest.client.inject.RestClient;
-
 import javax.interceptor.AroundInvoke;
 import javax.interceptor.Interceptor;
 import javax.interceptor.InvocationContext;
