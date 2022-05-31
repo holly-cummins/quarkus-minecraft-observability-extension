@@ -8,13 +8,13 @@ import javax.ws.rs.ext.Provider;
 @Provider
 public class RestExceptionMapper
         implements ExceptionMapper<Exception> {
+    MinecraftService minecraft = new MinecraftService();
 
     @Override
     public Response toResponse(Exception e) {
-//       This should be injected, but for now ...
-        MinecraftService minecraft = new HandcraftedMinecraftService();
         minecraft.boom();
 
+        // We lose some detail about the exceptions here, especially for 404, but we will live with that
         return Response.serverError().build();
 
     }

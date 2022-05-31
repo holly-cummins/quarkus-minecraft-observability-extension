@@ -36,7 +36,7 @@ public class Endpoint {
                 // Cheerfully assume all methods on PlayerWrapper take a string as an argument
                 Method m = player.getClass().getMethod(methodName, String.class);
                 m.invoke(player, message);
-                return "minecraft world updated";
+                return "minecraft world updated with " + methodName;
             } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException e) {
                 e.printStackTrace();
                 return "internal error";

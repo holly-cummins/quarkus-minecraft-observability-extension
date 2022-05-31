@@ -11,7 +11,6 @@ import io.quarkus.deployment.builditem.LogHandlerBuildItem;
 import io.quarkus.resteasy.reactive.spi.ExceptionMapperBuildItem;
 import org.acme.minecrafter.runtime.HelloRecorder;
 import org.acme.minecrafter.runtime.MinecraftLog;
-import org.acme.minecrafter.runtime.MinecraftLogHandler;
 import org.acme.minecrafter.runtime.MinecraftLogHandlerMaker;
 import org.acme.minecrafter.runtime.MinecraftLogInterceptor;
 import org.acme.minecrafter.runtime.MinecraftService;
@@ -49,18 +48,6 @@ class MinecrafterProcessor {
     @BuildStep
     AdditionalBeanBuildItem loggingInterceptor() {
         return AdditionalBeanBuildItem.unremovableOf(MinecraftLogInterceptor.class);
-    }
-
-    // Nice idea, does not help JAXRS client work
-    @BuildStep
-    AdditionalBeanBuildItem addRestService() {
-        return AdditionalBeanBuildItem.unremovableOf(MinecraftService.class);
-    }
-
-    // Nice idea, does not help JAXRS client work
-    @BuildStep
-    AdditionalBeanBuildItem addLogHandler() {
-        return AdditionalBeanBuildItem.unremovableOf(MinecraftLogHandler.class);
     }
 
     @BuildStep
