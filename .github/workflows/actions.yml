@@ -35,3 +35,5 @@ jobs:
         run: ./gradlew publish
         working-directory: modded-minecraft
       - uses: dineshsonachalam/markdown-autodocs@v1.0.4
+        with:
+          output_file_paths: '[./demo-script.md]'
