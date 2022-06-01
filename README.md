@@ -1,5 +1,7 @@
 # Minecraft as an observability client: A Quarkus extension demo
 
+![workflow](https://github.com/holly-cummins/quarkus-minecraft-observability-extension/actions/workflows/actions.yml/badge.svg)
+
 ## Quick start
 
 ### Start the minecraft server
