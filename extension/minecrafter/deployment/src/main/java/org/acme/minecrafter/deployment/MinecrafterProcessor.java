@@ -6,7 +6,6 @@ import io.quarkus.arc.deployment.BeanContainerBuildItem;
 import io.quarkus.arc.processor.AnnotationsTransformer;
 import io.quarkus.deployment.annotations.BuildProducer;
 import io.quarkus.deployment.annotations.BuildStep;
-import io.quarkus.deployment.annotations.Consume;
 import io.quarkus.deployment.annotations.Record;
 import io.quarkus.deployment.builditem.FeatureBuildItem;
 import io.quarkus.deployment.builditem.LogHandlerBuildItem;
@@ -41,10 +40,9 @@ class MinecrafterProcessor {
     }
 
     @Record(RUNTIME_INIT)
-    @Consume(BeanContainerBuildItem.class)
     @BuildStep
-    LogHandlerBuildItem addLogHandler(final MinecraftLogHandlerMaker maker) {
-        return new LogHandlerBuildItem(maker.create());
+    LogHandlerBuildItem addLogHandler(final MinecraftLogHandlerMaker maker, BeanContainerBuildItem beanContainer) {
+        return new LogHandlerBuildItem(maker.create(beanContainer.getValue()));
     }
 
     /**
