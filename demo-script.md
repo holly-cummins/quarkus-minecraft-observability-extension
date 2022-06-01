@@ -48,11 +48,32 @@ Build it and add it as a dependency to the todo app pom.
 Make a class which says hello.
 
 <!-- MARKDOWN-AUTO-DOCS:START (CODE:src=./extension/runtime/src/main/java/org/acme/minecrafter/runtime/HelloRecorder.java) -->
+<!-- The below code snippet is automatically added from ./extension/runtime/src/main/java/org/acme/minecrafter/runtime/HelloRecorder.java -->
+```java
+package org.acme.minecrafter.runtime;
+
+import io.quarkus.runtime.annotations.Recorder;
+
+@Recorder
+public class HelloRecorder {
+
+    public void sayHello(String name) {
+        System.out.println("Hello" + name);
+    }
+
+}
+```
 <!-- MARKDOWN-AUTO-DOCS:END -->
 
 .. and hook it into the processor.
 
 <!-- MARKDOWN-AUTO-DOCS:START (CODE:src=./extension/deployment/src/main/java/org/acme/minecrafter/deployment/MinecrafterProcessor.java&lines=36-38) -->
+<!-- The below code snippet is automatically added from ./extension/deployment/src/main/java/org/acme/minecrafter/deployment/MinecrafterProcessor.java -->
+```java
+    @Record(STATIC_INIT)
+    @BuildStep
+    public void helloBuildStep(HelloRecorder recorder) {
+```
 <!-- MARKDOWN-AUTO-DOCS:END -->
 
 #### Custom log handler
