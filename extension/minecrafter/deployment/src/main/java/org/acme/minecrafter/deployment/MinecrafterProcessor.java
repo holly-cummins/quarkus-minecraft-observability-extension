@@ -3,6 +3,7 @@ package org.acme.minecrafter.deployment;
 import io.quarkus.arc.deployment.AdditionalBeanBuildItem;
 import io.quarkus.arc.deployment.AnnotationsTransformerBuildItem;
 import io.quarkus.arc.processor.AnnotationsTransformer;
+import io.quarkus.deployment.annotations.BuildProducer;
 import io.quarkus.deployment.annotations.BuildStep;
 import io.quarkus.deployment.annotations.ExecutionTime;
 import io.quarkus.deployment.annotations.Record;
@@ -13,6 +14,7 @@ import org.acme.minecrafter.runtime.HelloRecorder;
 import org.acme.minecrafter.runtime.MinecraftLog;
 import org.acme.minecrafter.runtime.MinecraftLogHandlerMaker;
 import org.acme.minecrafter.runtime.MinecraftLogInterceptor;
+import org.acme.minecrafter.runtime.MinecraftService;
 import org.acme.minecrafter.runtime.RestExceptionMapper;
 import org.jboss.jandex.DotName;
 
@@ -23,6 +25,7 @@ import static io.quarkus.deployment.annotations.ExecutionTime.STATIC_INIT;
 class MinecrafterProcessor {
 
     private static final String FEATURE = "minecrafter";
+    private static final DotName JAX_RS_GET = DotName.createSimple("javax.ws.rs.GET");
 
     @BuildStep
     FeatureBuildItem feature() {
@@ -45,8 +48,9 @@ class MinecrafterProcessor {
      * Makes the interceptor as a bean so we can access it.
      */
     @BuildStep
-    AdditionalBeanBuildItem loggingInterceptor() {
-        return AdditionalBeanBuildItem.unremovableOf(MinecraftLogInterceptor.class);
+    void beans(BuildProducer<AdditionalBeanBuildItem> producer) {
+        producer.produce(AdditionalBeanBuildItem.unremovableOf(MinecraftLogInterceptor.class));
+        producer.produce(AdditionalBeanBuildItem.unremovableOf(MinecraftService.class));
     }
 
     @BuildStep
@@ -58,7 +62,7 @@ class MinecrafterProcessor {
             }
 
             public void transform(TransformationContext context) {
-                if (context.getTarget().asMethod().hasAnnotation(DotName.createSimple("javax.ws.rs.GET"))) {
+                if (context.getTarget().asMethod().hasAnnotation(JAX_RS_GET)) {
                     context.transform().add(MinecraftLog.class).done();
                 }
             }

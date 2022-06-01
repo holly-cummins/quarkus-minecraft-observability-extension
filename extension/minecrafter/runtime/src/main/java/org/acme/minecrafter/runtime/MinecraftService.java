@@ -1,5 +1,8 @@
 package org.acme.minecrafter.runtime;
 
+import javax.inject.Singleton;
+import javax.ws.rs.client.WebTarget;
+import org.eclipse.microprofile.config.inject.ConfigProperty;
 import org.eclipse.microprofile.rest.client.RestClientBuilder;
 
 import javax.ws.rs.client.Client;
@@ -12,10 +15,16 @@ import java.net.URI;
 import java.net.URL;
 import java.util.Set;
 
+@Singleton
 public class MinecraftService {
 
-    Client client = ClientBuilder.newClient();
-    String BASE_URL = "http://localhost:8081/observability/";
+    private final MinecrafterConfig minecrafterConfig;
+    private final Client client;
+
+    public MinecraftService(MinecrafterConfig minecrafterConfig) {
+        this.minecrafterConfig = minecrafterConfig;
+        this.client = ClientBuilder.newClient();
+    }
 
     public void recordVisit() {
         invokeMinecraft("visit");
@@ -28,7 +37,7 @@ public class MinecraftService {
 
     private void invokeMinecraft(String path) {
         try {
-            String response = client.target(BASE_URL + path)
+            String response = client.target(minecrafterConfig.baseURL).path(path)
                     .request(MediaType.TEXT_PLAIN)
                     .get(String.class);
 

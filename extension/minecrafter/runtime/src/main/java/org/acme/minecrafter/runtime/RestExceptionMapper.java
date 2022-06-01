@@ -1,6 +1,7 @@
 package org.acme.minecrafter.runtime;
 
 
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.ext.ExceptionMapper;
 import javax.ws.rs.ext.Provider;
@@ -8,7 +9,8 @@ import javax.ws.rs.ext.Provider;
 @Provider
 public class RestExceptionMapper
         implements ExceptionMapper<Exception> {
-    MinecraftService minecraft = new MinecraftService();
+    @Context
+    private MinecraftService minecraft;
 
     @Override
     public Response toResponse(Exception e) {

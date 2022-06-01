@@ -9,7 +9,11 @@ import java.lang.reflect.Method;
 @MinecraftLog
 @Interceptor
 public class MinecraftLogInterceptor {
-    MinecraftService minecraft = new MinecraftService();
+    private final MinecraftService minecraft;
+
+    public MinecraftLogInterceptor(MinecraftService minecraft) {
+        this.minecraft = minecraft;
+    }
 
     @AroundInvoke
     Object around(InvocationContext context) throws Exception {
