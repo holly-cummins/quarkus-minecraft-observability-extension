@@ -45,9 +45,9 @@ Build it and add it as a dependency to the todo app pom.
 
 #### Hello world
 
-TODO classes to copy/sample code
+```java:extension/runtime/src/main/java/org/acme/minecrafter/runtime/HelloRecorder.java
 
-Should we use https://github.com/marketplace/actions/markdown-embed-code-from-file?
+```
 
 #### Custom log handler
 
