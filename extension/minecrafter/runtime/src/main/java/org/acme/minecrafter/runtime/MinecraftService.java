@@ -1,7 +1,9 @@
 package org.acme.minecrafter.runtime;
 
 import javax.inject.Singleton;
+import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.WebTarget;
+
 import org.eclipse.microprofile.config.inject.ConfigProperty;
 import org.eclipse.microprofile.rest.client.RestClientBuilder;
 
@@ -27,13 +29,23 @@ public class MinecraftService {
     }
 
     public void recordVisit() {
-        invokeMinecraft("visit");
+        invokeMinecraft("event");
     }
 
     public void boom() {
         invokeMinecraft("boom");
     }
 
+
+    public void log(String message) {
+        try {
+            client.target(minecrafterConfig.baseURL).path("log")
+                    .request(MediaType.TEXT_PLAIN).post(Entity.text(message));
+            // Don't log anything back about the response or it ends up with too much circular logging
+        } catch (Throwable e) {
+            System.out.println("\uD83D\uDDE1️ [Minecrafter] Connection error: " + e);
+        }
+    }
 
     private void invokeMinecraft(String path) {
         try {
@@ -46,5 +58,6 @@ public class MinecraftService {
             System.out.println("\uD83D\uDDE1️ [Minecrafter] Connection error: " + e);
         }
     }
+
 }
 
