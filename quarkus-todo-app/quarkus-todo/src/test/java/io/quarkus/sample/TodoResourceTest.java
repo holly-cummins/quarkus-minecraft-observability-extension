@@ -63,7 +63,7 @@ class TodoResourceTest {
 
         List<Todo> todos = get("/api").then()
                 .statusCode(HttpStatus.SC_OK)
-                .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON)
+                .header(HttpHeaders.CONTENT_TYPE, APPLICATION_JSON)
                 .extract().body().as(getTodoTypeRef());
         assertEquals(5, todos.size());
     }
