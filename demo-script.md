@@ -45,9 +45,8 @@ Build it and add it as a dependency to the todo app pom.
 
 #### Hello world
 
-```java:extension/runtime/src/main/java/org/acme/minecrafter/runtime/HelloRecorder.java
-
-```
+<!-- MARKDOWN-AUTO-DOCS:START (CODE:src=./extension/runtime/src/main/java/org/acme/minecrafter/runtime/HelloRecorder.java) -->
+<!-- MARKDOWN-AUTO-DOCS:END -->
 
 #### Custom log handler
 
