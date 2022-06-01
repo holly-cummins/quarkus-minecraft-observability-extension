@@ -28,7 +28,7 @@ public class PlayerWrapper {
     }
 
 
-    public void say(String message) {
+    public void event(String message) {
 
         Vec3 pos = getPositionInFrontOfPlayer(3);
 
@@ -47,6 +47,13 @@ public class PlayerWrapper {
 
 
     }
+
+    public void say(String message) {
+        // Use the chat interface for logs since it wraps more nicely
+        TextComponent msg = new TextComponent(message);
+        player.sendMessage(msg, player.getUUID());
+    }
+
 
     public void explode(String message) {
         player.displayClientMessage(new TextComponent(message), true);

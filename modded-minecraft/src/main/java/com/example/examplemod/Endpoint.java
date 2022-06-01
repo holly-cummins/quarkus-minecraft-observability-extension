@@ -2,7 +2,9 @@ package com.example.examplemod;
 
 import org.jetbrains.annotations.NotNull;
 
+import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -13,11 +15,20 @@ public class Endpoint {
     // Ugly and static, but it will work for the moment
     private static Object player;
 
+    @POST
+    @Path("/log")
+    @Consumes("text/plain")
+    public String log(String message) {
+        System.out.println("[Quarkcraft] log");
+        return invokeOnPlayer("say", message);
+
+    }
+
     @GET
-    @Path("/visit")
-    public String get() {
-        System.out.println("[Quarkcraft] get");
-        return invokeOnPlayer("say", "A thing happened out in the real world");
+    @Path("/event")
+    public String alert() {
+        System.out.println("[Quarkcraft] event");
+        return invokeOnPlayer("event", "A thing happened out in the real world");
 
     }
 

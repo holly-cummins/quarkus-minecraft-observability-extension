@@ -2,10 +2,11 @@ package org.acme.minecrafter.deployment;
 
 import io.quarkus.arc.deployment.AdditionalBeanBuildItem;
 import io.quarkus.arc.deployment.AnnotationsTransformerBuildItem;
+import io.quarkus.arc.deployment.BeanContainerBuildItem;
 import io.quarkus.arc.processor.AnnotationsTransformer;
 import io.quarkus.deployment.annotations.BuildProducer;
 import io.quarkus.deployment.annotations.BuildStep;
-import io.quarkus.deployment.annotations.ExecutionTime;
+import io.quarkus.deployment.annotations.Consume;
 import io.quarkus.deployment.annotations.Record;
 import io.quarkus.deployment.builditem.FeatureBuildItem;
 import io.quarkus.deployment.builditem.LogHandlerBuildItem;
@@ -20,6 +21,7 @@ import org.jboss.jandex.DotName;
 
 import javax.ws.rs.Priorities;
 
+import static io.quarkus.deployment.annotations.ExecutionTime.RUNTIME_INIT;
 import static io.quarkus.deployment.annotations.ExecutionTime.STATIC_INIT;
 
 class MinecrafterProcessor {
@@ -38,8 +40,9 @@ class MinecrafterProcessor {
         recorder.sayHello("World");
     }
 
+    @Record(RUNTIME_INIT)
+    @Consume(BeanContainerBuildItem.class)
     @BuildStep
-    @Record(ExecutionTime.STATIC_INIT)
     LogHandlerBuildItem addLogHandler(final MinecraftLogHandlerMaker maker) {
         return new LogHandlerBuildItem(maker.create());
     }
