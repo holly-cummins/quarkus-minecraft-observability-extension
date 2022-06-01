@@ -13,7 +13,9 @@ import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.MediaType;
 import java.util.List;
 
-import static io.restassured.RestAssured.*;
+import static io.restassured.RestAssured.delete;
+import static io.restassured.RestAssured.get;
+import static io.restassured.RestAssured.given;
 import static junit.framework.TestCase.assertEquals;
 import static org.hamcrest.core.Is.is;
 
@@ -22,18 +24,21 @@ import static org.hamcrest.core.Is.is;
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 class TodoResourceTest {
 
+    // We're getting some charsets back from the server, which we can live with
+    private static final String APPLICATION_JSON = MediaType.APPLICATION_JSON + ";charset=UTF-8";
+
     @Test
     @Order(1)
     void testInitialItems() {
         List<Todo> todos = get("/api").then()
                 .statusCode(HttpStatus.SC_OK)
-                .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON)
+                .header(HttpHeaders.CONTENT_TYPE, APPLICATION_JSON)
                 .extract().body().as(getTodoTypeRef());
         assertEquals(4, todos.size());
 
         get("/api/1").then()
                 .statusCode(HttpStatus.SC_OK)
-                .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON)
+                .header(HttpHeaders.CONTENT_TYPE, APPLICATION_JSON)
                 .body("title", is("Introduction to Quarkus"))
                 .body("completed", is(true));
     }
@@ -51,7 +56,7 @@ class TodoResourceTest {
                 .post("/api")
                 .then()
                 .statusCode(HttpStatus.SC_CREATED)
-                .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON)
+                .header(HttpHeaders.CONTENT_TYPE, APPLICATION_JSON)
                 .body("title", is(todo.title))
                 .body("completed", is(false))
                 .body("id", is(5));
@@ -78,7 +83,7 @@ class TodoResourceTest {
                 .patch("/api/{id}")
                 .then()
                 .statusCode(HttpStatus.SC_OK)
-                .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON)
+                .header(HttpHeaders.CONTENT_TYPE, APPLICATION_JSON)
                 .body("title", is(todo.title))
                 .body("completed", is(true))
                 .body("id", is(5));
@@ -98,7 +103,7 @@ class TodoResourceTest {
 
         List<Todo> todos = get("/api").then()
                 .statusCode(HttpStatus.SC_OK)
-                .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON)
+                .header(HttpHeaders.CONTENT_TYPE, APPLICATION_JSON)
                 .extract().body().as(getTodoTypeRef());
         assertEquals(4, todos.size());
     }
@@ -112,7 +117,7 @@ class TodoResourceTest {
 
         List<Todo> todos = get("/api").then()
                 .statusCode(HttpStatus.SC_OK)
-                .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON)
+                .header(HttpHeaders.CONTENT_TYPE, APPLICATION_JSON)
                 .extract().body().as(getTodoTypeRef());
         assertEquals(3, todos.size());
     }
