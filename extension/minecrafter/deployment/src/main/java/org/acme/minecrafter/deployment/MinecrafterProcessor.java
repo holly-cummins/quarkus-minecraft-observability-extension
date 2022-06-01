@@ -73,7 +73,7 @@ class MinecrafterProcessor {
     @BuildStep
     ExceptionMapperBuildItem exceptionMappers() {
         return new ExceptionMapperBuildItem(RestExceptionMapper.class.getName(),
-                Exception.class.getName(), Priorities.USER + 100, false);
+                Exception.class.getName(), Priorities.USER + 100, true);
     }
 
 }
