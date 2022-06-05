@@ -180,6 +180,13 @@ We have a customised minecraft instance which exposes some endpoints we can send
 
 Show the minecraft window and start a game (connect to the pre-defined Quarkiverse server).
 
+### Configuration
+
+The the minecraft server is on localhost right now, but it could be anywhere, so we'll need some configuration.
+
+<!-- MARKDOWN-AUTO-DOCS:START (CODE:src=./extension/runtime/src/main/java/org/acme/minecrafter/runtime/MinecrafterConfig.java) -->
+<!-- MARKDOWN-AUTO-DOCS:END -->
+
 #### Add rest client
 
 Create a JAX-RS client which talks to the endpoints in our minecraft mod.
