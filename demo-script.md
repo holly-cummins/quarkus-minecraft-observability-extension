@@ -41,6 +41,15 @@ mvn io.quarkus.platform:quarkus-maven-plugin:create-extension -N
 
 Build it and add it as a dependency to the todo app pom.
 
+```xml
+
+<dependency>
+    <groupId>org.acme</groupId>
+    <artifactId>demo-extension</artifactId>
+    <version>1.0.0-SNAPSHOT</version>
+</dependency>
+```
+
 *Note* After every extension change, it will need to be built and the todo app launched.
 
 #### Hello world
@@ -55,13 +64,81 @@ Make a class which says hello.
 <!-- MARKDOWN-AUTO-DOCS:START (CODE:src=./extension/deployment/src/main/java/org/acme/minecrafter/deployment/MinecrafterProcessor.java&lines=36-40) -->
 <!-- MARKDOWN-AUTO-DOCS:END -->
 
+If you build the extension and then run `quarkus dev` on the app, you should see your hello world message.
+
 #### Custom log handler
 
-...
+Next, do something more interesting by hooking all logging.
+
+```
+    @Record(RUNTIME_INIT)
+    @BuildStep
+    LogHandlerBuildItem addLogHandler(final LogHandlerMaker maker) {
+        return new LogHandlerBuildItem(maker.create());
+    }
+```
+
+```java
+
+@Recorder
+public class MinecraftLogHandlerMaker {
+
+    public RuntimeValue<Optional<Handler>> create() {
+        Handler handler = new LogHandler();
+        return new RuntimeValue<>(Optional.of(handler));
+
+    }
+}
+```
+
+For the log handler, extend LogHander and add this into the publish method:
+
+```java
+   @Override
+public void publish(LogRecord record){
+        String formattedMessage=String.format(record.getMessage(),record.getParameters());
+        System.out.println("⛏️ "+formattedMessage);
+        }
+```
+
+Test logs come out twice on app startup, once from the Quarkus handler and one from our custom handler.
 
 #### Interceptor on REST endpoints
 
-...
+What we really want to know about is when our REST endpoints are hit.
+
+Declare an interceptor binding.
+
+```
+
+@InterceptorBinding
+@Target({ElementType.ANNOTATION_TYPE, ElementType.TYPE, ElementType.METHOD})
+@Retention(RetentionPolicy.RUNTIME)
+public @interface DemoLog {
+}
+```
+
+... and an implementation which is an interceptor:
+
+```java
+
+@DemoLog
+@Interceptor
+public class LogInterceptor {
+
+    @AroundInvoke
+    Object around(InvocationContext context) throws Exception {
+
+        Method method = context.getMethod();
+        // Simple implementation for now
+        System.out.println("\uD83D\uDDE1️ Spotted use of " +
+                method.getDeclaringClass().getSimpleName() + "." +
+                method.getName());
+
+        return context.proceed();
+    }
+}
+```
 
 ## The 'and another thing' business context update
 
@@ -76,13 +153,48 @@ We have a customised minecraft instance which exposes some endpoints we can send
 
 Show the minecraft window and start a game (connect to the pre-defined Quarkiverse server).
 
-#### Add rest calls
+#### Add rest client
 
-Add rest calls to the log handler and REST interceptor ...
+Create a JAX-RS client which talks to the endpoints in our minecraft mod.
+
+<!-- MARKDOWN-AUTO-DOCS:START (CODE:src=./extension/runtime/src/main/java/org/acme/minecrafter/runtime/MinecraftService.java) -->
+<!-- MARKDOWN-AUTO-DOCS:END -->
+
+#### Add rest client
+
+Add rest calls to the log handler and REST interceptor.
+
+In the log handler:
+
+```java
+        minecraft.log(formattedMessage);
+```
+
+In the rest interceptor:
+
+```java
+                minecraft.recordVisit();
+```
+
+Arrange the windows so you can see both the minecraft game and the terminal and the browser window for the rest app.
+Restart the todo app. You should see quarkus logs in the minecraft window.
+Visit [http://localhost:8080/](http://localhost:8080/). You should see a lightning flash and a chicken will appear.
 
 #### Exception handling
 
-... Visit [http://localhost:8080/api/6](http://localhost:8080/api/6). This will trigger a 404 exception.
+Next, let's do some exception handling. Create an exception mapper:
+
+<!-- MARKDOWN-AUTO-DOCS:START (CODE:src=./extension/runtime/src/main/java/org/acme/minecrafter/runtime/RestExceptionMapper.java) -->
+<!-- MARKDOWN-AUTO-DOCS:END -->
+
+... and hook it in to the extension:
+
+<!-- MARKDOWN-AUTO-DOCS:START (CODE:src=./extension/deployment/src/main/java/org/acme/minecrafter/deployment/MinecrafterProcessor.java&lines=73-78) -->
+<!-- MARKDOWN-AUTO-DOCS:END -->
+
+Visit [http://localhost:8080/api/6](http://localhost:8080/api/6). This will trigger a 404 exception. In minecraft, you
+should see the lightning flash for the visit, and then the chicken will explode. If you're unlucky, your character will
+be killed by the exploding chicken.
 
 ## Next app
 
@@ -90,9 +202,34 @@ If we'd just wanted to connect one app to minecraft, we could have done it in se
 
 But now we can take another app, add the dependency, and see *it* turning up in minecraft.
 
+### Superheroes app
+
+Quit the todo app (to avoid a port conflict).
+
+Start the superheroes app:
+
+```
+docker-compose -f deploy/docker-compose/java17.yml -f deploy/docker-compose/prometheus.yml up --remove-orphans
+```
+
+Then visit [http://localhost:8080](http://localhost:8080) and [localhost:8085](http://localhost:8085).
+
+Then modify the pom.xml
+
+```xml
+
+<dependency>
+    <groupId>org.acme</groupId>
+    <artifactId>demo-extension</artifactId>
+    <version>1.0.0-SNAPSHOT</version>
+</dependency>
+```
+
+Visit the web page again and you should see the events in the minecraft client.
+
 ## Discussion of next steps
 
-Here are some of the things that we could do with more time, to talk through.
+Here are some of the things that someone could do with more time. These are good things to talk through after the demo.
 
 - Configuration of the extension
 - Assigning an animal to each application so we can distinguish source
