@@ -58,6 +58,7 @@ Make a class which says hello.
 
 <!-- MARKDOWN-AUTO-DOCS:START (CODE:src=./extension/runtime/src/main/java/org/acme/minecrafter/runtime/HelloRecorder.java) -->
 <!-- The below code snippet is automatically added from ./extension/runtime/src/main/java/org/acme/minecrafter/runtime/HelloRecorder.java -->
+
 ```java
 package org.acme.minecrafter.runtime;
 
@@ -72,19 +73,22 @@ public class HelloRecorder {
 
 }
 ```
+
 <!-- MARKDOWN-AUTO-DOCS:END -->
 
 .. and hook it into the processor.
 
 <!-- MARKDOWN-AUTO-DOCS:START (CODE:src=./extension/deployment/src/main/java/org/acme/minecrafter/deployment/MinecrafterProcessor.java&lines=36-40) -->
 <!-- The below code snippet is automatically added from ./extension/deployment/src/main/java/org/acme/minecrafter/deployment/MinecrafterProcessor.java -->
+
 ```java
     @Record(STATIC_INIT)
-    @BuildStep
-    public void helloBuildStep(HelloRecorder recorder) {
+@BuildStep
+public void helloBuildStep(HelloRecorder recorder){
         recorder.sayHello("World");
-    }
+        }
 ```
+
 <!-- MARKDOWN-AUTO-DOCS:END -->
 
 If you build the extension and then run `quarkus dev` on the app, you should see your hello world message.
@@ -182,6 +186,7 @@ Create a JAX-RS client which talks to the endpoints in our minecraft mod.
 
 <!-- MARKDOWN-AUTO-DOCS:START (CODE:src=./extension/runtime/src/main/java/org/acme/minecrafter/runtime/MinecraftService.java) -->
 <!-- The below code snippet is automatically added from ./extension/runtime/src/main/java/org/acme/minecrafter/runtime/MinecraftService.java -->
+
 ```java
 package org.acme.minecrafter.runtime;
 
@@ -246,6 +251,7 @@ public class MinecraftService {
 
 }
 ```
+
 <!-- MARKDOWN-AUTO-DOCS:END -->
 
 #### Add rest client
@@ -274,6 +280,7 @@ Next, let's do some exception handling. Create an exception mapper:
 
 <!-- MARKDOWN-AUTO-DOCS:START (CODE:src=./extension/runtime/src/main/java/org/acme/minecrafter/runtime/RestExceptionMapper.java) -->
 <!-- The below code snippet is automatically added from ./extension/runtime/src/main/java/org/acme/minecrafter/runtime/RestExceptionMapper.java -->
+
 ```java
 package org.acme.minecrafter.runtime;
 
@@ -299,19 +306,22 @@ public class RestExceptionMapper
     }
 }
 ```
+
 <!-- MARKDOWN-AUTO-DOCS:END -->
 
 ... and hook it in to the extension:
 
 <!-- MARKDOWN-AUTO-DOCS:START (CODE:src=./extension/deployment/src/main/java/org/acme/minecrafter/deployment/MinecrafterProcessor.java&lines=73-78) -->
 <!-- The below code snippet is automatically added from ./extension/deployment/src/main/java/org/acme/minecrafter/deployment/MinecrafterProcessor.java -->
+
 ```java
     @BuildStep
-    ExceptionMapperBuildItem exceptionMappers() {
-        return new ExceptionMapperBuildItem(RestExceptionMapper.class.getName(),
-                Exception.class.getName(), Priorities.USER + 100, true);
-    }
+    ExceptionMapperBuildItem exceptionMappers(){
+            return new ExceptionMapperBuildItem(RestExceptionMapper.class.getName(),
+        Exception.class.getName(),Priorities.USER+100,true);
+        }
 ```
+
 <!-- MARKDOWN-AUTO-DOCS:END -->
 
 Visit [http://localhost:8080/api/6](http://localhost:8080/api/6). This will trigger a 404 exception. In minecraft, you
@@ -353,7 +363,7 @@ Visit the web page again and you should see the events in the minecraft client.
 
 Here are some of the things that someone could do with more time. These are good things to talk through after the demo.
 
-- Configuration of the extension
+- Dev service for the minecraft instance; we won't always have access to the production minecraft server
 - Assigning an animal to each application so we can distinguish source
 - Displaying metrics
 - Visualise application load - rain means heavy load, snow very very heavy
