@@ -57,11 +57,34 @@ Build it and add it as a dependency to the todo app pom.
 Make a class which says hello.
 
 <!-- MARKDOWN-AUTO-DOCS:START (CODE:src=./extension/runtime/src/main/java/org/acme/minecrafter/runtime/HelloRecorder.java) -->
+<!-- The below code snippet is automatically added from ./extension/runtime/src/main/java/org/acme/minecrafter/runtime/HelloRecorder.java -->
+```java
+package org.acme.minecrafter.runtime;
+
+import io.quarkus.runtime.annotations.Recorder;
+
+@Recorder
+public class HelloRecorder {
+
+    public void sayHello(String name) {
+        System.out.println("Hello" + name);
+    }
+
+}
+```
 <!-- MARKDOWN-AUTO-DOCS:END -->
 
 .. and hook it into the processor.
 
 <!-- MARKDOWN-AUTO-DOCS:START (CODE:src=./extension/deployment/src/main/java/org/acme/minecrafter/deployment/MinecrafterProcessor.java&lines=36-40) -->
+<!-- The below code snippet is automatically added from ./extension/deployment/src/main/java/org/acme/minecrafter/deployment/MinecrafterProcessor.java -->
+```java
+    @Record(STATIC_INIT)
+    @BuildStep
+    public void helloBuildStep(HelloRecorder recorder) {
+        recorder.sayHello("World");
+    }
+```
 <!-- MARKDOWN-AUTO-DOCS:END -->
 
 If you build the extension and then run `quarkus dev` on the app, you should see your hello world message.
@@ -158,6 +181,71 @@ Show the minecraft window and start a game (connect to the pre-defined Quarkiver
 Create a JAX-RS client which talks to the endpoints in our minecraft mod.
 
 <!-- MARKDOWN-AUTO-DOCS:START (CODE:src=./extension/runtime/src/main/java/org/acme/minecrafter/runtime/MinecraftService.java) -->
+<!-- The below code snippet is automatically added from ./extension/runtime/src/main/java/org/acme/minecrafter/runtime/MinecraftService.java -->
+```java
+package org.acme.minecrafter.runtime;
+
+import javax.inject.Singleton;
+import javax.ws.rs.client.Entity;
+import javax.ws.rs.client.WebTarget;
+
+import org.eclipse.microprofile.config.inject.ConfigProperty;
+import org.eclipse.microprofile.rest.client.RestClientBuilder;
+
+import javax.ws.rs.client.Client;
+import javax.ws.rs.client.ClientBuilder;
+import javax.ws.rs.core.MediaType;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URI;
+import java.net.URL;
+import java.util.Set;
+
+@Singleton
+public class MinecraftService {
+
+    private final MinecrafterConfig minecrafterConfig;
+    private final Client client;
+
+    public MinecraftService(MinecrafterConfig minecrafterConfig) {
+        this.minecrafterConfig = minecrafterConfig;
+        this.client = ClientBuilder.newClient();
+    }
+
+    public void recordVisit() {
+        invokeMinecraft("event");
+    }
+
+    public void boom() {
+        invokeMinecraft("boom");
+    }
+
+
+    public void log(String message) {
+        try {
+            client.target(minecrafterConfig.baseURL).path("log")
+                    .request(MediaType.TEXT_PLAIN).post(Entity.text(message));
+            // Don't log anything back about the response or it ends up with too much circular logging
+        } catch (Throwable e) {
+            System.out.println("\uD83D\uDDE1️ [Minecrafter] Connection error: " + e);
+        }
+    }
+
+    private void invokeMinecraft(String path) {
+        try {
+            String response = client.target(minecrafterConfig.baseURL).path(path)
+                    .request(MediaType.TEXT_PLAIN)
+                    .get(String.class);
+
+            System.out.println("\uD83D\uDDE1️ [Minecrafter] Mod response: " + response);
+        } catch (Throwable e) {
+            System.out.println("\uD83D\uDDE1️ [Minecrafter] Connection error: " + e);
+        }
+    }
+
+}
+```
 <!-- MARKDOWN-AUTO-DOCS:END -->
 
 #### Add rest client
@@ -185,11 +273,45 @@ Visit [http://localhost:8080/](http://localhost:8080/). You should see a lightni
 Next, let's do some exception handling. Create an exception mapper:
 
 <!-- MARKDOWN-AUTO-DOCS:START (CODE:src=./extension/runtime/src/main/java/org/acme/minecrafter/runtime/RestExceptionMapper.java) -->
+<!-- The below code snippet is automatically added from ./extension/runtime/src/main/java/org/acme/minecrafter/runtime/RestExceptionMapper.java -->
+```java
+package org.acme.minecrafter.runtime;
+
+
+import javax.ws.rs.core.Context;
+import javax.ws.rs.core.Response;
+import javax.ws.rs.ext.ExceptionMapper;
+import javax.ws.rs.ext.Provider;
+
+@Provider
+public class RestExceptionMapper
+        implements ExceptionMapper<Exception> {
+    @Context
+    private MinecraftService minecraft;
+
+    @Override
+    public Response toResponse(Exception e) {
+        minecraft.boom();
+
+        // We lose some detail about the exceptions here, especially for 404, but we will live with that
+        return Response.serverError().build();
+
+    }
+}
+```
 <!-- MARKDOWN-AUTO-DOCS:END -->
 
 ... and hook it in to the extension:
 
 <!-- MARKDOWN-AUTO-DOCS:START (CODE:src=./extension/deployment/src/main/java/org/acme/minecrafter/deployment/MinecrafterProcessor.java&lines=73-78) -->
+<!-- The below code snippet is automatically added from ./extension/deployment/src/main/java/org/acme/minecrafter/deployment/MinecrafterProcessor.java -->
+```java
+    @BuildStep
+    ExceptionMapperBuildItem exceptionMappers() {
+        return new ExceptionMapperBuildItem(RestExceptionMapper.class.getName(),
+                Exception.class.getName(), Priorities.USER + 100, true);
+    }
+```
 <!-- MARKDOWN-AUTO-DOCS:END -->
 
 Visit [http://localhost:8080/api/6](http://localhost:8080/api/6). This will trigger a 404 exception. In minecraft, you
