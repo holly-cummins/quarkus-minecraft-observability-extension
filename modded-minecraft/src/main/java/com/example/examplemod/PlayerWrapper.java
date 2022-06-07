@@ -11,7 +11,9 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -43,6 +45,10 @@ public class PlayerWrapper {
 
         Chicken chicken = EntityType.CHICKEN.create(world);
         chicken.setPos(pos);
+        String time = new SimpleDateFormat("HH:mm:ss").format(new Date());
+        TextComponent timeComponent = new TextComponent(time);
+        chicken.setCustomName(timeComponent);
+        chicken.setCustomNameVisible(true);
         world.addFreshEntity(chicken);
 
 
