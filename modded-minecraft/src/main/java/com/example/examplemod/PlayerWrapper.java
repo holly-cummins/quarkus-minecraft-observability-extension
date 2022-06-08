@@ -23,6 +23,7 @@ import java.util.List;
  * invoke the method by reflection.
  */
 public class PlayerWrapper {
+    public static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("HH:mm:ss");
     private final Player player;
 
     PlayerWrapper(Player player) {
@@ -45,7 +46,7 @@ public class PlayerWrapper {
 
         Chicken chicken = EntityType.CHICKEN.create(world);
         chicken.setPos(pos);
-        String time = new SimpleDateFormat("HH:mm:ss").format(new Date());
+        String time = DATE_FORMAT.format(new Date());
         TextComponent timeComponent = new TextComponent(time);
         chicken.setCustomName(timeComponent);
         chicken.setCustomNameVisible(true);
