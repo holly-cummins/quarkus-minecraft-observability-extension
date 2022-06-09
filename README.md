@@ -39,6 +39,8 @@ cd quarkus-todo-app
 quarkus dev
 ```
 
+(If you do `mvn install`, with podman it should be `TESTCONTAINERS_RYUK_DISABLED="true" mvn install`.)
+
 ### Interact with the web app
 
 Arrange your windows so you can see both the minecraft client and the web application.
