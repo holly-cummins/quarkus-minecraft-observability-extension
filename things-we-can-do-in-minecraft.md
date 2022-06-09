@@ -6,6 +6,7 @@ In general we are interested in 'passive' effects where a player does not have t
 - A sign appears with writing on it
 - A wall (?) appears with writing on it?
 - Dialog bubbles on entities
+- We name a mob with some information (eg timestamp, origin, etc)
 - Explosion
 - Lightning
 - Fireball

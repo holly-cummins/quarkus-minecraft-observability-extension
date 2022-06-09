@@ -343,6 +343,8 @@ But now we can take another app, add the dependency, and see *it* turning up in 
 
 ### Superheroes app
 
+[Alternatively, do the Quarkus starter app]
+
 Quit the todo app (to avoid a port conflict).
 
 Start the superheroes app:
