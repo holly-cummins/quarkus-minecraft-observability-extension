@@ -1,7 +1,7 @@
 package com.example.examplemod;
 
 import net.minecraft.core.BlockPos;
-import net.minecraft.network.chat.TextComponent;
+import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LightningBolt;
 import net.minecraft.world.entity.animal.Chicken;
@@ -35,7 +35,7 @@ public class PlayerWrapper {
 
         Vec3 pos = getPositionInFrontOfPlayer(3);
 
-        player.displayClientMessage(new TextComponent(message), true);
+        player.displayClientMessage( Component.literal(message), true);
 
         Level world = player.getCommandSenderWorld();
 
@@ -47,7 +47,7 @@ public class PlayerWrapper {
         Chicken chicken = EntityType.CHICKEN.create(world);
         chicken.setPos(pos);
         String time = DATE_FORMAT.format(new Date());
-        TextComponent timeComponent = new TextComponent(time);
+        Component timeComponent = Component.literal(time);
         chicken.setCustomName(timeComponent);
         chicken.setCustomNameVisible(true);
         world.addFreshEntity(chicken);
@@ -57,13 +57,13 @@ public class PlayerWrapper {
 
     public void say(String message) {
         // Use the chat interface for logs since it wraps more nicely
-        TextComponent msg = new TextComponent(message);
-        player.sendMessage(msg, player.getUUID());
+        Component msg = Component.literal(message);
+        player.sendSystemMessage(msg);
     }
 
 
     public void explode(String message) {
-        player.displayClientMessage(new TextComponent(message), true);
+        player.displayClientMessage(Component.literal(message), true);
         Level level = player.getCommandSenderWorld();
         Chicken chicken = EntityType.CHICKEN.create(level);
         chicken.setPos(getPositionInFrontOfPlayer(6));
