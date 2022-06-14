@@ -1,6 +1,23 @@
 .gradle
-**/.idea/workspace.xml
-**/.idea/tasks.xml
-**/.idea/compiler.xml
 
+#### ignore all .idea files ...
+**/.idea/*
+
+#### except
+
+# Version Control configuration for your project
+**/.idea/!vcs.xml
+
+# how IDEA should treat the text files in your project
+**/.idea/!encodings.xml
+
+# automatic code formatting
+**/.idea/!codeStyleSettings.xml
+
+# project specific words
+**/.idea/!dictionaries
+
+!copyrights
+!misc.xml
+!sqldialects.xml
 
