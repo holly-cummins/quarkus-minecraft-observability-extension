@@ -2,6 +2,8 @@
 
 ![workflow](https://github.com/holly-cummins/quarkus-minecraft-observability-extension/actions/workflows/actions.yml/badge.svg)
 
+![a minecraft screen with quarkus logging in it](images/startuplogging.png)
+
 ## Quick start
 
 ### Start the minecraft server
@@ -47,3 +49,8 @@ Arrange your windows so you can see both the minecraft client and the web applic
 Visit [http://localhost:8080](http://localhost:8080). While you're interacting with the web app, you should see things
 happen in the minecraft world. Visiting the page will cause a mob to spawn, and an exception (like a 404) will cause an
 explosion.
+
+![a minecraft screen with a timestamped chicken](images/normal-hit.png)
+
+You can see a [video of the interactions](images/interactions.mov).
+A more complete [demo script](demo-script.md) is also available.
