@@ -13,6 +13,8 @@ cd modded-minecraft
 ./gradlew runServer
 ```
 
+> **_INFO:_** First time you start the Mincraft server you will have to accept the eula by changing eula=false to eula=true in the file `modded-minecraft/run/eula.txt`
+
 ### Start the minecraft client
 
 You will need the Java edition of Minecraft. Start a multiplayer game, and connect to `http://localhost:25565`.
