@@ -23,7 +23,6 @@ During the demo
 
 ```bash
 cd quarkus-todo-app
-./start-database.sh
 quarkus dev
 ```
 

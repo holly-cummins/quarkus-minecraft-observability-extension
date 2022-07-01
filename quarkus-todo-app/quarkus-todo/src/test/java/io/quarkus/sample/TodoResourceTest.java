@@ -20,7 +20,6 @@ import static junit.framework.TestCase.assertEquals;
 import static org.hamcrest.core.Is.is;
 
 @QuarkusTest
-@QuarkusTestResource(DatabaseResource.class)
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 class TodoResourceTest {
 

@@ -39,7 +39,6 @@ mvn install
 
 ```bash
 cd quarkus-todo-app
-./start-database.sh
 quarkus dev
 ```
 
