@@ -1,4 +1,5 @@
 .gradle
+**/*.iml
 
 #### ignore all .idea files ...
 **/.idea/*
