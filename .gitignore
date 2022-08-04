@@ -23,3 +23,7 @@
 !copyrights
 !sqldialects.xml
 
+**/target
+**/node_modules
+**/.mvn
+
