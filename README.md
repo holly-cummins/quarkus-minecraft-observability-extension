@@ -17,7 +17,7 @@ cd modded-minecraft
 
 ### Start the minecraft client
 
-You will need the Java edition of Minecraft. Start a multiplayer game, and connect to `http://localhost:25565`.
+You will need the Java edition of Minecraft. Start a multiplayer game, and connect to `localhost:25565`.
 
 You will need to configure the client to allow you to `alt-tab` away from the client without it pausing and bringing up
 a menu. Edit `options.txt` in

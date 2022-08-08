@@ -1,10 +1,9 @@
 package com.example.examplemod;
 
+
 import com.mojang.logging.LogUtils;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.Blocks;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.server.ServerStartingEvent;
@@ -77,7 +76,7 @@ public class ExampleMod {
 
     @SubscribeEvent
     public void onPlayerLogin(PlayerEvent.PlayerLoggedInEvent event) {
-        Player player = event.getPlayer();
+        Player player = event.getEntity();
         System.out.println("QUARKCRAFT - Client connected: " + player);
         player.displayClientMessage(Component.literal("Hello from the Quarkiverse!"), true);
 
