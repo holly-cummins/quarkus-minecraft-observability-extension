@@ -20,11 +20,11 @@ cd modded-minecraft
 There are two ways to do this: 
 
 - Java edition of Minecraft. This has a nice desktop icon, but it means the code needs to be upgraded every time a new client is released. The libraries do not have much backwards compatibility between releases.
-- The client in the Minecraft library. This ensures compatibility with the server. To launch it, run
+- The client in the Forge Minecraft library. This ensures compatibility with the server. To launch it, run
 
 ```
 cd modded-minecraft
-./gradlew runServer
+./gradlew runClient
 ```
 
 In either case, start a multiplayer game, and connect to `localhost:25565`.
