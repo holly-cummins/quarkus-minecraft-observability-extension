@@ -17,7 +17,17 @@ cd modded-minecraft
 
 ### Start the minecraft client
 
-You will need the Java edition of Minecraft. Start a multiplayer game, and connect to `localhost:25565`.
+There are two ways to do this: 
+
+- Java edition of Minecraft. This has a nice desktop icon, but it means the code needs to be upgraded every time a new client is released. The libraries do not have much backwards compatibility between releases.
+- The client in the Minecraft library. This ensures compatibility with the server. To launch it, run
+
+```
+cd modded-minecraft
+./gradlew runServer
+```
+
+In either case, start a multiplayer game, and connect to `localhost:25565`.
 
 You will need to configure the client to allow you to `alt-tab` away from the client without it pausing and bringing up
 a menu. Edit `options.txt` in
