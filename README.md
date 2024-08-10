@@ -6,13 +6,14 @@
 
 ## Quick start
 
-### Start the minecraft server
+### Build the minecraft server container
 
 ```bash
 cd modded-minecraft
-./gradlew runServer
+podman build -t minecraft-server .
 ```
 
+The container build can be a bit slow the first time, be warned. If you're in a hurry, you can turn off dev services and use `./gradlew runServer` instead.
 > **_INFO:_** First time you start the Minecraft server you will have to accept the eula by changing eula=false to eula=true in the file `modded-minecraft/run/eula.txt`
 
 ### Start the minecraft client
@@ -20,7 +21,7 @@ cd modded-minecraft
 There are two ways to do this: 
 
 - Java edition of Minecraft. This has a nice desktop icon, but it means the code needs to be upgraded every time a new client is released. The libraries do not have much backwards compatibility between releases.
-- The client in the Forge Minecraft library. This ensures compatibility with the server. To launch it, run
+- The client in the Forge Minecraft library. This ensures compatibility with the server. You may need to set `online-mode` to false on the server. To launch it, run
 
 ```
 cd modded-minecraft
