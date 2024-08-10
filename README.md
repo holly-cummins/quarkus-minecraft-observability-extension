@@ -13,7 +13,7 @@ cd modded-minecraft
 ./gradlew runServer
 ```
 
-> **_INFO:_** First time you start the Mincraft server you will have to accept the eula by changing eula=false to eula=true in the file `modded-minecraft/run/eula.txt`
+> **_INFO:_** First time you start the Minecraft server you will have to accept the eula by changing eula=false to eula=true in the file `modded-minecraft/run/eula.txt`
 
 ### Start the minecraft client
 
@@ -41,7 +41,7 @@ pauseOnLostFocus:false
 ### Build the extension
 
 ```bash
-cd extension/minecrafter
+cd extension
 mvn install
 ```
 
