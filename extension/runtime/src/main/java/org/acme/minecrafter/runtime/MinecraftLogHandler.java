@@ -15,7 +15,8 @@ public class MinecraftLogHandler extends Handler {
         String formattedMessage = String.format(record.getMessage(), record.getParameters());
         System.out.println("⛏️ [Minecrafter] " + formattedMessage);
 
-        minecraft.log(formattedMessage);
+        // TODO this hangs if the minecraft server is a dev service; make it fire-and-forget
+        // minecraft.log(formattedMessage);
 
     }
 
