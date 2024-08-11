@@ -22,6 +22,14 @@ jobs:
           java-version: '17'
           distribution: 'temurin'
           cache: maven
+      - name: Buildah Action
+        id: build-image
+        uses: redhat-actions/buildah-build@v2
+        with:
+          image: minecraft-server
+          tags: latest
+          containerfiles: |
+            ./Dockerfile
       - name: Build extension
         run: mvn install
         working-directory: extension
