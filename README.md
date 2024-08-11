@@ -13,7 +13,7 @@ cd modded-minecraft
 podman build -t minecraft-server .
 ```
 
-The container build can be a bit slow the first time, be warned. If you're in a hurry, you can turn off dev services and use `./gradlew runServer` instead.
+The container build can be a bit slow the first time, be warned. If you're in a hurry, you can turn off dev services and use `./gradlew runServer` instead. If you'd like to test the built container, you can run `podman run -p 25565:25565 -p 8081:8081 minecraft-server.`
 > **_INFO:_** First time you start the Minecraft server you will have to accept the eula by changing eula=false to eula=true in the file `modded-minecraft/run/eula.txt`
 
 ### Start the minecraft client

@@ -16,8 +16,6 @@ import net.minecraftforge.fml.event.lifecycle.InterModProcessEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import org.slf4j.Logger;
 
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 import java.util.stream.Collectors;
 
 // The value here should match an entry in the META-INF/mods.toml file
@@ -28,11 +26,17 @@ public class ExampleMod {
 
     public ExampleMod() {
         // Register the setup method for modloading
-        FMLJavaModLoadingContext.get().getModEventBus().addListener(this::setup);
+        FMLJavaModLoadingContext.get()
+                                .getModEventBus()
+                                .addListener(this::setup);
         // Register the enqueueIMC method for modloading
-        FMLJavaModLoadingContext.get().getModEventBus().addListener(this::enqueueIMC);
+        FMLJavaModLoadingContext.get()
+                                .getModEventBus()
+                                .addListener(this::enqueueIMC);
         // Register the processIMC method for modloading
-        FMLJavaModLoadingContext.get().getModEventBus().addListener(this::processIMC);
+        FMLJavaModLoadingContext.get()
+                                .getModEventBus()
+                                .addListener(this::processIMC);
 
         // Register ourselves for server and other game events we are interested in
         MinecraftForge.EVENT_BUS.register(this);
@@ -53,8 +57,9 @@ public class ExampleMod {
     private void processIMC(final InterModProcessEvent event) {
         // Some example code to receive and process InterModComms from other mods
         LOGGER.info("Got IMC {}", event.getIMCStream().
-                map(m -> m.messageSupplier().get()).
-                collect(Collectors.toList()));
+                                       map(m -> m.messageSupplier()
+                                                 .get()).
+                                       collect(Collectors.toList()));
     }
 
     // You can use SubscribeEvent and let the Event Bus discover methods to call
@@ -65,13 +70,15 @@ public class ExampleMod {
 
         ClassLoader cl = ClassLoader.getSystemClassLoader();
 
+        // TODO add a guard here, try to load the class?
         // Switch classloaders to the system classloader, rather than the transformer classloader Forge uses for mod loading
-        try {
-            Class<?> clazz = cl.loadClass("com.example.examplemod.Listener");
-            clazz.getDeclaredConstructor().newInstance();
-        } catch (ClassNotFoundException | InstantiationException | InvocationTargetException | IllegalAccessException | NoSuchMethodException e) {
-            e.printStackTrace();
-        }
+//        try {
+//            Class<?> clazz = cl.loadClass("com.example.examplemod.Listener");
+//            clazz.getDeclaredConstructor().newInstance();
+//        } catch (ClassNotFoundException | InstantiationException | InvocationTargetException | IllegalAccessException | NoSuchMethodException e) {
+//            e.printStackTrace();
+//        }
+        new Listener();
     }
 
     @SubscribeEvent
@@ -83,17 +90,18 @@ public class ExampleMod {
         PlayerWrapper playerWrapper = new PlayerWrapper(player);
 
         // To find the class, we need to use the system classloader rather than the TransformingClassLoader Forge uses for mod loading
-        try {
-            ClassLoader cl = ClassLoader.getSystemClassLoader();
-            Class<?> clazz = cl.loadClass("com.example.examplemod.Endpoint");
-            // The signature needs to be an Object because Player would be in a different classloader
-            Method m = clazz.getMethod("setPlayer", Object.class);
-            // Rather inelegant static communication, but it does the job
-            m.invoke(null, playerWrapper);
-
-        } catch (ClassNotFoundException | InvocationTargetException | IllegalAccessException | NoSuchMethodException e) {
-            e.printStackTrace();
-        }
+//        try {
+//            ClassLoader cl = ClassLoader.getSystemClassLoader();
+//            Class<?> clazz = cl.loadClass("com.example.examplemod.Endpoint");
+//            // The signature needs to be an Object because Player would be in a different classloader
+//            Method m = clazz.getMethod("setPlayer", Object.class);
+//            // Rather inelegant static communication, but it does the job
+//            m.invoke(null, playerWrapper);
+//
+//        } catch (ClassNotFoundException | InvocationTargetException | IllegalAccessException | NoSuchMethodException e) {
+//            e.printStackTrace();
+//        }
+        Endpoint.setPlayer(playerWrapper);
 
     }
 

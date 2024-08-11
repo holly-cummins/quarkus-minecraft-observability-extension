@@ -5,6 +5,7 @@ import io.undertow.Undertow;
 import io.undertow.servlet.api.DeploymentInfo;
 import org.jboss.resteasy.plugins.server.undertow.UndertowJaxrsServer;
 import org.jboss.resteasy.spi.ResteasyDeployment;
+import java.net.InetAddress;
 
 public class Listener {
     public Listener() {
@@ -21,8 +22,14 @@ public class Listener {
 
         server.deploy(deploymentInfo);
 
-        Undertow.Builder builder = Undertow.builder().addHttpListener(8081, "127.0.0.1");
-        server.start(builder);
+        try {
+            Undertow.Builder builder = Undertow.builder()
+                                               .addHttpListener(8081, InetAddress.getLocalHost()
+                                                                                 .getHostAddress());
+            server.start(builder);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
 
     }
 }

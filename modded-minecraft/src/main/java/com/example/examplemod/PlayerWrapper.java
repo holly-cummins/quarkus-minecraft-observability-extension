@@ -63,7 +63,7 @@ public class PlayerWrapper {
 
 
     public void explode(String message) {
-        player.displayClientMessage(Component.literal(message), true);
+        //  player.displayClientMessage(Component.literal(message), true);
         Level level = player.getCommandSenderWorld();
         Chicken chicken = EntityType.CHICKEN.create(level);
         chicken.setPos(getPositionInFrontOfPlayer(6));

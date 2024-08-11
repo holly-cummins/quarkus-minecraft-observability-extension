@@ -18,25 +18,29 @@ public class Endpoint {
     @POST
     @Path("/log")
     @Consumes("text/plain")
-    public String log(String message) {
+    public void log(String message) {
         System.out.println("[Quarkcraft] log");
-        return invokeOnPlayer("say", message);
+        invokeOnPlayer("say", message);
 
     }
 
+    // Ideally we would return a string, but when installed as a mod in a container, that gives org.jboss.resteasy.core.NoMessageBodyWriterFoundFailure: Could not find MessageBodyWriter for response object of type: java.lang.String of
+    // media type: text/html
     @GET
     @Path("/event")
-    public String alert() {
+    public void alert() {
         System.out.println("[Quarkcraft] event");
-        return invokeOnPlayer("event", "A thing happened out in the real world");
+        invokeOnPlayer("event", "A thing happened out in the real world");
 
     }
 
+    // Ideally we would return a string, but when installed as a mod in a container, that gives org.jboss.resteasy.core.NoMessageBodyWriterFoundFailure: Could not find MessageBodyWriter for response object of type: java.lang.String of
+    // media type: text/html
     @GET
     @Path("/boom")
-    public String explode() {
+    public void explode() {
         System.out.println("[Quarkcraft] boom");
-        return invokeOnPlayer("explode", "Something -bad- happened out in the real world");
+        invokeOnPlayer("explode", "Something -bad- happened out in the real world");
     }
 
     @NotNull
@@ -45,7 +49,8 @@ public class Endpoint {
 // The player will be in a different classloader to us, so we need to use more reflection
             try {
                 // Cheerfully assume all methods on PlayerWrapper take a string as an argument
-                Method m = player.getClass().getMethod(methodName, String.class);
+                Method m = player.getClass()
+                                 .getMethod(methodName, String.class);
                 m.invoke(player, message);
                 return "minecraft world updated with " + methodName;
             } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException e) {

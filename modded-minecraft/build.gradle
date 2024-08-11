@@ -129,7 +129,7 @@ dependencies {
     // Specify the version of Minecraft to use. If this is any group other than 'net.minecraft', it is assumed
     // that the dep is a ForgeGradle 'patcher' dependency, and its patches will be applied.
     // The userdev artifact is a special name and will get all sorts of transformations applied to it.
-    minecraft 'net.minecraftforge:forge:1.19.2-43.0.1'
+    minecraft 'net.minecraftforge:forge:1.19.2-43.0.22'
 
     // Real mod deobf dependency examples - these get remapped to your current mappings
     // compileOnly fg.deobf("mezz.jei:jei-${mc_version}:${jei_version}:api") // Adds JEI API as a compile dependency
@@ -140,6 +140,7 @@ dependencies {
     implementation "javax.ws.rs:javax.ws.rs-api:2.0.1"
     // A recent version, like this one is needed to avoid a crash looking for META-INF/versions (multirelease jar)
     implementation "org.jboss.resteasy:resteasy-jaxrs:4.0.0.Beta5"
+    implementation "org.jboss.resteasy:resteasy-jackson-provider:4.0.0.Beta5"
     implementation "org.jboss.resteasy:resteasy-undertow:4.0.0.Beta5"
     implementation "javax.servlet:javax.servlet-api:3.0.1"
 
@@ -165,6 +166,30 @@ jar {
                 "Implementation-Vendor"   : "examplemodsareus",
                 "Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ")
         ])
+    }
+}
+
+task farjar(type: Jar) {
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+    from {
+        configurations.runtimeClasspath.findAll { file ->
+            // Exclude the transitive dependencies of minecraft dependency type, which should not go into the fat jar
+            // when true, jar file is unzipped and added
+            // The one exception is the forge jar itself
+            !configurations.minecraft.contains(file)
+        }.collect { it.isDirectory() ? it : zipTree(it) }
+    }
+}
+
+jar {
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+    from {
+        configurations.runtimeClasspath.findAll { file ->
+            // Exclude the transitive dependencies of minecraft dependency type, which should not go into the fat jar
+            // when true, jar file is unzipped and added
+            // The one exception is the forge jar itself
+            !configurations.minecraft.contains(file)
+        }.collect { it.isDirectory() ? it : zipTree(it) }
     }
 }
 
