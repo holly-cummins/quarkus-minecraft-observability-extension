@@ -93,7 +93,7 @@ class MinecrafterProcessor {
 
         // Don't be tempted to put this in a try-with-resources block, even if the IDE advises it
         // Otherwise the dev service gets shut down after startup :)
-        MinecraftContainer container = new MinecraftContainer(dockerImageName).withExposedPorts(8081, 25565);
+        MinecraftContainer container = new MinecraftContainer(dockerImageName);
         container.start();
 
         // Set a config property so that anything using the container can find it, even on the random port
