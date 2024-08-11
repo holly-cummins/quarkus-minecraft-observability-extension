@@ -20,24 +20,24 @@ The container build can be a bit slow the first time, be warned. If you're in a 
 
 There are two ways to do this: 
 
-- Java edition of Minecraft. This has a nice desktop icon, but it means the code needs to be upgraded every time a new client is released. The libraries do not have much backwards compatibility between releases.
-- The client in the Forge Minecraft library. This ensures compatibility with the server. You may need to set `online-mode` to false on the server. To launch it, run
+The best way to connect a client us to use the client in the Forge Minecraft library. This ensures compatibility with the server. To launch it, run
 
 ```
 cd modded-minecraft
 ./gradlew runClient
 ```
 
-In either case, start a multiplayer game, and connect to `localhost:25565`.
+Start a multiplayer game, and connect to `localhost:25565`.
 
-You will need to configure the client to allow you to `alt-tab` away from the client without it pausing and bringing up
+### Using the 'official' launcher and the Java edition of Minecraft
+
+You can also use the normal Minecraft launcher, but only if the client and server versions exactly match. 
+Using the official client will allow you may need to set `online-mode` to true on the server, and get rid of a warning.
+
+If using the official client, which will be un-modded, you will need to configure the client to allow you to `alt-tab` away from the client without it pausing and bringing up
 a menu. Edit `options.txt` in
 your [minecraft folder](https://gaming.stackexchange.com/questions/15664/can-i-alt-tab-out-of-minecraft-without-the-game-auto-pausing)
 , and change `pauseOnLostFocus` to `false`.
-
-```
-pauseOnLostFocus:false
-```
 
 ### Build the extension
 

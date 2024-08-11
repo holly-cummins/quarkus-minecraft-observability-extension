@@ -2,6 +2,7 @@ package com.example.examplemod;
 
 
 import com.mojang.logging.LogUtils;
+import net.minecraft.client.Minecraft;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.common.MinecraftForge;
@@ -40,6 +41,9 @@ public class ExampleMod {
 
         // Register ourselves for server and other game events we are interested in
         MinecraftForge.EVENT_BUS.register(this);
+
+        // Keep the game running when tabbing away
+        Minecraft.getInstance().options.pauseOnLostFocus = false;
     }
 
     private void setup(final FMLCommonSetupEvent event) {
