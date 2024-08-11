@@ -175,7 +175,6 @@ jar {
         configurations.runtimeClasspath.findAll { file ->
             // Exclude the transitive dependencies of minecraft dependency type, which should not go into the fat jar
             // when true, jar file is unzipped and added
-            // The one exception is the forge jar itself
             !configurations.minecraft.contains(file)
         }.collect { it.isDirectory() ? it : zipTree(it) }
     }
