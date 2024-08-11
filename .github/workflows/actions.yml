@@ -30,7 +30,7 @@ jobs:
           tags: latest
           context: ./modded-minecraft
           containerfiles: |
-            Dockerfile
+            ./modded-minecraft/Dockerfile
       - name: Build extension
         run: mvn install
         working-directory: extension
