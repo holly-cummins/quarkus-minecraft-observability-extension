@@ -28,8 +28,9 @@ jobs:
         with:
           image: minecraft-server
           tags: latest
+          context: ./modded-minecraft
           containerfiles: |
-            ./modded-minecraft/Dockerfile
+            Dockerfile
       - name: Build extension
         run: mvn install
         working-directory: extension
