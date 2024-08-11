@@ -24,29 +24,25 @@ public class Endpoint {
 
     }
 
-    // Ideally we would return a string, but when installed as a mod in a container, that gives org.jboss.resteasy.core.NoMessageBodyWriterFoundFailure: Could not find MessageBodyWriter for response object of type: java.lang.String of
-    // media type: text/html
     @GET
     @Path("/event")
-    public void alert() {
+    public String alert() {
         System.out.println("[Quarkcraft] event");
-        invokeOnPlayer("event", "A thing happened out in the real world");
+        return invokeOnPlayer("event", "A thing happened out in the real world");
 
     }
 
-    // Ideally we would return a string, but when installed as a mod in a container, that gives org.jboss.resteasy.core.NoMessageBodyWriterFoundFailure: Could not find MessageBodyWriter for response object of type: java.lang.String of
-    // media type: text/html
     @GET
     @Path("/boom")
-    public void explode() {
+    public String explode() {
         System.out.println("[Quarkcraft] boom");
-        invokeOnPlayer("explode", "Something -bad- happened out in the real world");
+        return invokeOnPlayer("explode", "Something -bad- happened out in the real world");
     }
 
     @NotNull
     private String invokeOnPlayer(String methodName, String message) {
         if (player != null) {
-// The player will be in a different classloader to us, so we need to use more reflection
+// The player may be in a different classloader to us, so we need to use more reflection
             try {
                 // Cheerfully assume all methods on PlayerWrapper take a string as an argument
                 Method m = player.getClass()

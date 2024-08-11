@@ -86,7 +86,7 @@ public class ExampleMod {
 //        } catch (ClassNotFoundException | InstantiationException | InvocationTargetException | IllegalAccessException | NoSuchMethodException e) {
 //            e.printStackTrace();
 //        }
-        new Listener();
+        new Listener().start();
     }
 
     @SubscribeEvent

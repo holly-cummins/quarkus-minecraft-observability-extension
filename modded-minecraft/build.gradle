@@ -140,7 +140,6 @@ dependencies {
     implementation "javax.ws.rs:javax.ws.rs-api:2.0.1"
     // A recent version, like this one is needed to avoid a crash looking for META-INF/versions (multirelease jar)
     implementation "org.jboss.resteasy:resteasy-jaxrs:4.0.0.Beta5"
-    implementation "org.jboss.resteasy:resteasy-jackson-provider:4.0.0.Beta5"
     implementation "org.jboss.resteasy:resteasy-undertow:4.0.0.Beta5"
     implementation "javax.servlet:javax.servlet-api:3.0.1"
 

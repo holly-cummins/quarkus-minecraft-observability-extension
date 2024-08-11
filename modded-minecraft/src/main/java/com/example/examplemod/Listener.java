@@ -5,10 +5,14 @@ import io.undertow.Undertow;
 import io.undertow.servlet.api.DeploymentInfo;
 import org.jboss.resteasy.plugins.server.undertow.UndertowJaxrsServer;
 import org.jboss.resteasy.spi.ResteasyDeployment;
+
 import java.net.InetAddress;
 
 public class Listener {
     public Listener() {
+    }
+
+    public void start() {
 
         UndertowJaxrsServer server = new UndertowJaxrsServer();
 
@@ -16,7 +20,8 @@ public class Listener {
         deployment.setApplicationClass(Application.class.getName());
 
         DeploymentInfo deploymentInfo = server.undertowDeployment(deployment, "/");
-        deploymentInfo.setClassLoader(this.getClass().getClassLoader());
+        deploymentInfo.setClassLoader(this.getClass()
+                                          .getClassLoader());
         deploymentInfo.setDeploymentName("Example");
         deploymentInfo.setContextPath("");
 
