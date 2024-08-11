@@ -2,13 +2,14 @@ package com.example.examplemod;
 
 
 import com.mojang.logging.LogUtils;
-import net.minecraft.client.Minecraft;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Player;
+import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.server.ServerStartingEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.InterModComms;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
@@ -42,9 +43,12 @@ public class ExampleMod {
         // Register ourselves for server and other game events we are interested in
         MinecraftForge.EVENT_BUS.register(this);
 
-        // Keep the game running when tabbing away
-        Minecraft.getInstance().options.pauseOnLostFocus = false;
+        DistExecutor.safeCallWhenOn(Dist.CLIENT,
+                () -> ClientSetup::adjustClient
+        );
+
     }
+
 
     private void setup(final FMLCommonSetupEvent event) {
 
