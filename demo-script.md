@@ -177,7 +177,7 @@ Show the minecraft window and start a game (connect to the pre-defined Quarkiver
 
 ### Configuration
 
-The the minecraft server is on localhost right now, but it could be anywhere, so we'll need some configuration.
+The minecraft server is on localhost right now, but it could be anywhere, so we'll need some configuration.
 
 <!-- MARKDOWN-AUTO-DOCS:START (CODE:src=./extension/runtime/src/main/java/org/acme/minecrafter/runtime/MinecrafterConfig.java) -->
 <!-- The below code snippet is automatically added from ./extension/runtime/src/main/java/org/acme/minecrafter/runtime/MinecrafterConfig.java -->
