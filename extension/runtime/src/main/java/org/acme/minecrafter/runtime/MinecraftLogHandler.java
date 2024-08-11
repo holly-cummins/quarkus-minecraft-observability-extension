@@ -15,9 +15,10 @@ public class MinecraftLogHandler extends Handler {
         String formattedMessage = String.format(record.getMessage(), record.getParameters());
         System.out.println("⛏️ [Minecrafter] " + formattedMessage);
 
-        // TODO this hangs if the minecraft server is a dev service; make it fire-and-forget
-        // minecraft.log(formattedMessage);
-
+        // Don't send anything to the remote minecraft instance
+        // Even with catches for exceptions, problems in remote calls can generate logging
+        // ... and that causes infinite output in the best case
+        // ... and a total block of server startup in the bad case
     }
 
     @Override

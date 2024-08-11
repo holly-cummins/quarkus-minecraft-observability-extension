@@ -21,7 +21,8 @@ public class MinecraftLogInterceptor {
         Method method = context.getMethod();
         // Simple implementation for now
         System.out.println("\uD83D\uDDE1️ [Minecrafter] Spotted use of " +
-                method.getDeclaringClass().getSimpleName() + "." +
+                method.getDeclaringClass()
+                      .getSimpleName() + "." +
                 method.getName());
 
         minecraft.recordVisit();
