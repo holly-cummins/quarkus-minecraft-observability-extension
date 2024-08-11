@@ -1,7 +1,6 @@
 package org.acme.minecrafter.deployment;
 
 import org.testcontainers.containers.GenericContainer;
-import org.testcontainers.containers.Network;
 import org.testcontainers.containers.wait.strategy.Wait;
 import org.testcontainers.utility.DockerImageName;
 
@@ -14,13 +13,6 @@ public class MinecraftContainer extends GenericContainer<MinecraftContainer> {
 
     public MinecraftContainer(DockerImageName image) {
         super(image);
-
-        List<String> portBindings = new ArrayList<>();
-        portBindings.add("25565:25565"); // Make life easy for the minecraft client
-        setPortBindings(portBindings);
-        //withReuse(true);
-
-        //    withExposedPorts(MINECRAFT_PORT);
         // This is a bit of a cheat, since at this point the client isn't ready, but otherwise it's too slow
         waitingFor(Wait.forLogMessage(".*" + "Preparing" + ".*", 1));
     }
@@ -28,7 +20,11 @@ public class MinecraftContainer extends GenericContainer<MinecraftContainer> {
 
     @Override
     protected void configure() {
-        withNetwork(Network.SHARED);
+        List<String> portBindings = new ArrayList<>();
+        portBindings.add("25565:25565"); // Make life easy for the minecraft client
+        setPortBindings(portBindings);
+
+        withReuse(true);
         addExposedPorts(OBSERVABILITY_PORT);
         addExposedPorts(MINECRAFT_PORT);
     }
