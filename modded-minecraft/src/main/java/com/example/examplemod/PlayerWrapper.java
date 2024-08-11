@@ -2,9 +2,9 @@ package com.example.examplemod;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LightningBolt;
-import net.minecraft.world.entity.animal.Chicken;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Explosion;
 import net.minecraft.world.level.Level;
@@ -31,11 +31,11 @@ public class PlayerWrapper {
     }
 
 
-    public void event(String message) {
+    public void event(String message, String animalName) {
 
         Vec3 pos = getPositionInFrontOfPlayer(3);
 
-        player.displayClientMessage( Component.literal(message), true);
+        player.displayClientMessage(Component.literal(message), true);
 
         Level world = player.getCommandSenderWorld();
 
@@ -44,37 +44,67 @@ public class PlayerWrapper {
         lightning.setVisualOnly(true);
         world.addFreshEntity(lightning);
 
-        Chicken chicken = EntityType.CHICKEN.create(world);
-        chicken.setPos(pos);
+        Entity animal = getAnimalType(animalName).create(world);
+        animal.setPos(pos);
         String time = DATE_FORMAT.format(new Date());
         Component timeComponent = Component.literal(time);
-        chicken.setCustomName(timeComponent);
-        chicken.setCustomNameVisible(true);
-        world.addFreshEntity(chicken);
-
-
+        animal.setCustomName(timeComponent);
+        animal.setCustomNameVisible(true);
+        world.addFreshEntity(animal);
     }
 
-    public void say(String message) {
+    private EntityType getAnimalType(String animalName) {
+        EntityType animalType;
+        switch (animalName) {
+            case "cat":
+                animalType = EntityType.CAT;
+                break;
+            case "cow":
+                animalType = EntityType.COW;
+                break;
+            case "horse":
+                animalType = EntityType.HORSE;
+                break;
+            case "pig":
+                animalType = EntityType.PIG;
+                break;
+            case "rabbit":
+                animalType = EntityType.RABBIT;
+                break;
+            case "sheep":
+                animalType = EntityType.SHEEP;
+                break;
+            case "chicken":
+                animalType = EntityType.CHICKEN;
+                break;
+            default:
+                animalType = EntityType.CHICKEN;
+                break;
+        }
+        return animalType;
+    }
+
+    public void say(String message, String ignored) {
         // Use the chat interface for logs since it wraps more nicely
         Component msg = Component.literal(message);
         player.sendSystemMessage(msg);
     }
 
 
-    public void explode(String message) {
-        //  player.displayClientMessage(Component.literal(message), true);
+    public void explode(String message, String ignored) {
+        player.displayClientMessage(Component.literal(message), true);
         Level level = player.getCommandSenderWorld();
-        Chicken chicken = EntityType.CHICKEN.create(level);
-        chicken.setPos(getPositionInFrontOfPlayer(6));
-        level.addFreshEntity(chicken);
 
-        Vec3 blockPos = chicken.getPosition(45);
+        Entity animal = EntityType.WOLF.create(level);
+        animal.setPos(getPositionInFrontOfPlayer(6));
+        level.addFreshEntity(animal);
+
+        Vec3 blockPos = animal.getPosition(45);
         List<BlockPos> affectedPositions = new ArrayList();
-        affectedPositions.add(new BlockPos(chicken.getX(), chicken.getY(),
-                chicken.getZ()));
-        Explosion explosion = new Explosion(level, chicken, chicken.getX(), chicken.getY(),
-                chicken.getZ(), 6F, affectedPositions);
+        affectedPositions.add(new BlockPos(animal.getX(), animal.getY(),
+                animal.getZ()));
+        Explosion explosion = new Explosion(level, animal, animal.getX(), animal.getY(),
+                animal.getZ(), 6F, affectedPositions);
 
         explosion.explode();
     }

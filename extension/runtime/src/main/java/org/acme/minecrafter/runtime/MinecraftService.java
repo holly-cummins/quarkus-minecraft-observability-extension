@@ -43,7 +43,8 @@ public class MinecraftService {
             String response = client.target(minecrafterConfig.baseURL)
                                     .path("observability/" + path)
                                     .request(MediaType.TEXT_PLAIN)
-                                    .get(String.class);
+                                    .post(Entity.text(minecrafterConfig.animalType))
+                                    .readEntity(String.class);
 
             System.out.println("\uD83D\uDDE1️ [Minecrafter] Mod response: " + response);
         } catch (Throwable e) {

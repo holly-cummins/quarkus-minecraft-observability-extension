@@ -12,4 +12,10 @@ public class MinecrafterConfig {
      */
     @ConfigItem(defaultValue = "http://localhost:8081/")
     public String baseURL;
+
+    /**
+     * The kind of animal we spawn
+     */
+    @ConfigItem(defaultValue = "chicken")
+    public String animalType;
 }
