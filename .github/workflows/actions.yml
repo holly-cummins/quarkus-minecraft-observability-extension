@@ -24,6 +24,7 @@ jobs:
           cache: maven
       - name: Buildah Action
         id: build-image
+        working-directory: modded-minecraft
         uses: redhat-actions/buildah-build@v2
         with:
           image: minecraft-server
