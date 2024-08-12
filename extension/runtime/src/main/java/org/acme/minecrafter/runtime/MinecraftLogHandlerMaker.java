@@ -11,7 +11,7 @@ import java.util.logging.Handler;
 public class MinecraftLogHandlerMaker {
 
     public RuntimeValue<Optional<Handler>> create(BeanContainer beanContainer) {
-        MinecraftService minecraft = beanContainer.instance(MinecraftService.class);
+        MinecraftService minecraft = beanContainer.beanInstance(MinecraftService.class);
         Handler handler = new MinecraftLogHandler(minecraft);
         return new RuntimeValue<>(Optional.of(handler));
 

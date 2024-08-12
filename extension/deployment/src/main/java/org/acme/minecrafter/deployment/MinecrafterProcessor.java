@@ -14,6 +14,7 @@ import io.quarkus.deployment.builditem.LaunchModeBuildItem;
 import io.quarkus.deployment.builditem.LogHandlerBuildItem;
 import io.quarkus.deployment.dev.devservices.GlobalDevServicesConfig;
 import io.quarkus.resteasy.reactive.spi.ExceptionMapperBuildItem;
+import jakarta.ws.rs.Priorities;
 import org.acme.minecrafter.runtime.HelloRecorder;
 import org.acme.minecrafter.runtime.MinecraftLog;
 import org.acme.minecrafter.runtime.MinecraftLogHandlerMaker;
@@ -23,7 +24,6 @@ import org.acme.minecrafter.runtime.RestExceptionMapper;
 import org.jboss.jandex.DotName;
 import org.testcontainers.utility.DockerImageName;
 
-import javax.ws.rs.Priorities;
 import java.util.Map;
 
 import static io.quarkus.deployment.annotations.ExecutionTime.RUNTIME_INIT;
@@ -32,7 +32,7 @@ import static io.quarkus.deployment.annotations.ExecutionTime.STATIC_INIT;
 class MinecrafterProcessor {
 
     private static final String FEATURE = "minecrafter";
-    private static final DotName JAX_RS_GET = DotName.createSimple("javax.ws.rs.GET");
+    private static final DotName JAX_RS_GET = DotName.createSimple("jakarta.ws.rs.GET");
 
     @BuildStep
     FeatureBuildItem feature() {
