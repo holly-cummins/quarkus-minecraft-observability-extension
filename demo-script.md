@@ -78,11 +78,10 @@ public class HelloRecorder {
 <!-- MARKDOWN-AUTO-DOCS:START (CODE:src=./extension/deployment/src/main/java/org/acme/minecrafter/deployment/MinecrafterProcessor.java&lines=36-40) -->
 <!-- The below code snippet is automatically added from ./extension/deployment/src/main/java/org/acme/minecrafter/deployment/MinecrafterProcessor.java -->
 ```java
-    @Record(STATIC_INIT)
-    @BuildStep
-    public void helloBuildStep(HelloRecorder recorder) {
-        recorder.sayHello("World");
-    }
+class MinecrafterProcessor {
+
+    private static final String FEATURE = "minecrafter";
+    private static final DotName JAX_RS_GET = DotName.createSimple("jakarta.ws.rs.GET");
 ```
 <!-- MARKDOWN-AUTO-DOCS:END -->
 
@@ -194,8 +193,14 @@ public class MinecrafterConfig {
     /**
      * The minecraft server's observability base URL
      */
-    @ConfigItem(defaultValue = "http://localhost:8081/observability/")
+    @ConfigItem(defaultValue = "http://localhost:8081/")
     public String baseURL;
+
+    /**
+     * The kind of animal we spawn
+     */
+    @ConfigItem(defaultValue = "chicken")
+    public String animalType;
 }
 ```
 <!-- MARKDOWN-AUTO-DOCS:END -->
@@ -209,28 +214,21 @@ Create a JAX-RS client which talks to the endpoints in our minecraft mod.
 ```java
 package org.acme.minecrafter.runtime;
 
-import javax.inject.Singleton;
-import javax.ws.rs.client.Entity;
-import javax.ws.rs.client.WebTarget;
+import jakarta.inject.Singleton;
+import jakarta.ws.rs.client.Client;
+import jakarta.ws.rs.client.ClientBuilder;
+import jakarta.ws.rs.client.Entity;
+import jakarta.ws.rs.core.MediaType;
 
-import org.eclipse.microprofile.config.inject.ConfigProperty;
-import org.eclipse.microprofile.rest.client.RestClientBuilder;
-
-import javax.ws.rs.client.Client;
-import javax.ws.rs.client.ClientBuilder;
-import javax.ws.rs.core.MediaType;
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URI;
-import java.net.URL;
-import java.util.Set;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 @Singleton
 public class MinecraftService {
 
     private final MinecrafterConfig minecrafterConfig;
     private final Client client;
+    ExecutorService executor = Executors.newSingleThreadExecutor();
 
     public MinecraftService(MinecrafterConfig minecrafterConfig) {
         this.minecrafterConfig = minecrafterConfig;
@@ -248,8 +246,10 @@ public class MinecraftService {
 
     public void log(String message) {
         try {
-            client.target(minecrafterConfig.baseURL).path("log")
-                    .request(MediaType.TEXT_PLAIN).post(Entity.text(message));
+            client.target(minecrafterConfig.baseURL)
+                  .path("observability/log")
+                  .request(MediaType.TEXT_PLAIN)
+                  .post(Entity.text(message));
             // Don't log anything back about the response or it ends up with too much circular logging
         } catch (Throwable e) {
             System.out.println("\uD83D\uDDE1️ [Minecrafter] Connection error: " + e);
@@ -257,10 +257,16 @@ public class MinecraftService {
     }
 
     private void invokeMinecraft(String path) {
+        executor.submit(() -> invokeMinecraftSynchronously(path));
+    }
+
+    private void invokeMinecraftSynchronously(String path) {
         try {
-            String response = client.target(minecrafterConfig.baseURL).path(path)
-                    .request(MediaType.TEXT_PLAIN)
-                    .get(String.class);
+            String response = client.target(minecrafterConfig.baseURL)
+                                    .path("observability/" + path)
+                                    .request(MediaType.TEXT_PLAIN)
+                                    .post(Entity.text(minecrafterConfig.animalType))
+                                    .readEntity(String.class);
 
             System.out.println("\uD83D\uDDE1️ [Minecrafter] Mod response: " + response);
         } catch (Throwable e) {
@@ -302,10 +308,11 @@ Next, let's do some exception handling. Create an exception mapper:
 package org.acme.minecrafter.runtime;
 
 
-import javax.ws.rs.core.Context;
-import javax.ws.rs.core.Response;
-import javax.ws.rs.ext.ExceptionMapper;
-import javax.ws.rs.ext.Provider;
+import jakarta.ws.rs.NotFoundException;
+import jakarta.ws.rs.core.Context;
+import jakarta.ws.rs.core.Response;
+import jakarta.ws.rs.ext.ExceptionMapper;
+import jakarta.ws.rs.ext.Provider;
 
 @Provider
 public class RestExceptionMapper
@@ -315,10 +322,16 @@ public class RestExceptionMapper
 
     @Override
     public Response toResponse(Exception e) {
-        minecraft.boom();
+
+        // Tactically suppress target resource exceptions
+        // of the form jakarta.ws.rs.NotFoundException: Unable to find matching target resource method
+        if (!(e instanceof NotFoundException)) {
+            minecraft.boom();
+        }
 
         // We lose some detail about the exceptions here, especially for 404, but we will live with that
-        return Response.serverError().build();
+        return Response.serverError()
+                       .build();
 
     }
 }
@@ -330,11 +343,12 @@ public class RestExceptionMapper
 <!-- MARKDOWN-AUTO-DOCS:START (CODE:src=./extension/deployment/src/main/java/org/acme/minecrafter/deployment/MinecrafterProcessor.java&lines=73-78) -->
 <!-- The below code snippet is automatically added from ./extension/deployment/src/main/java/org/acme/minecrafter/deployment/MinecrafterProcessor.java -->
 ```java
-    @BuildStep
-    ExceptionMapperBuildItem exceptionMappers() {
-        return new ExceptionMapperBuildItem(RestExceptionMapper.class.getName(),
-                Exception.class.getName(), Priorities.USER + 100, true);
-    }
+                return kind == org.jboss.jandex.AnnotationTarget.Kind.METHOD;
+            }
+
+            public void transform(TransformationContext context) {
+                if (context.getTarget()
+                           .asMethod()
 ```
 <!-- MARKDOWN-AUTO-DOCS:END -->
 
