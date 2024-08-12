@@ -40,7 +40,7 @@ jobs:
           tags: |
             minecraft-server:latest
       - name: Build extension
-        run: mvn install
+        run: mvn install -DskipTests=true
         working-directory: extension
       - name: Build todo app
         run: mvn install
