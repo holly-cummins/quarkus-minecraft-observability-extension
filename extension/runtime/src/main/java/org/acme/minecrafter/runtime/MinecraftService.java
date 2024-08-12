@@ -6,11 +6,15 @@ import jakarta.ws.rs.client.ClientBuilder;
 import jakarta.ws.rs.client.Entity;
 import jakarta.ws.rs.core.MediaType;
 
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
 @Singleton
 public class MinecraftService {
 
     private final MinecrafterConfig minecrafterConfig;
     private final Client client;
+    ExecutorService executor = Executors.newSingleThreadExecutor();
 
     public MinecraftService(MinecrafterConfig minecrafterConfig) {
         this.minecrafterConfig = minecrafterConfig;
@@ -39,6 +43,10 @@ public class MinecraftService {
     }
 
     private void invokeMinecraft(String path) {
+        executor.submit(() -> invokeMinecraftSynchronously(path));
+    }
+
+    private void invokeMinecraftSynchronously(String path) {
         try {
             String response = client.target(minecrafterConfig.baseURL)
                                     .path("observability/" + path)
