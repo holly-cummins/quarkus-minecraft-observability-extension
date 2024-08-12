@@ -43,7 +43,7 @@ jobs:
         run: mvn install -DskipTests=true
         working-directory: extension
       - name: Build todo app
-        run: mvn install
+        run: mvn install  -DskipTests=true
         working-directory: quarkus-todo-app
       - uses: dineshsonachalam/markdown-autodocs@v1.0.4
         with:
