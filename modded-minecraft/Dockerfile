@@ -13,7 +13,6 @@ ENV MINECRAFT_ONLINE_MODE=false
 # For performance reasons, keep the world small
 ENV MINECRAFT_MAX_WORLD_SIZE=299
 
-RUN find / -name mods
 EXPOSE 8081
 
 COPY --from=build /usr/app/build/libs/modid-1.0.jar /usr/share/minecraft/mods
