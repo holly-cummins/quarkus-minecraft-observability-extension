@@ -39,6 +39,8 @@ jobs:
             ./modded-minecraft/Dockerfile
       - name: Push image to Docker
         run: |
+          sudo apt-get -y update
+          sudo apt-get -y update buildah
           buildah push minecraft-server docker-daemon:minecraft-server:latest
       - name: Build extension
         run: mvn install
