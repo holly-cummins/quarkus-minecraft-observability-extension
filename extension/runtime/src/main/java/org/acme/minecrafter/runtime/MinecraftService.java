@@ -51,7 +51,7 @@ public class MinecraftService {
             String response = client.target(minecrafterConfig.baseURL)
                                     .path("observability/" + path)
                                     .request(MediaType.TEXT_PLAIN)
-                                    .post(Entity.text(minecrafterConfig.animalType))
+                                    .post(Entity.text("chicken"))
                                     .readEntity(String.class);
 
             System.out.println("\uD83D\uDDE1️ [Minecrafter] Mod response: " + response);
