@@ -6,7 +6,11 @@
 
 ## Quick start
 
+Both the extension and the Minecraft game itself need a Minecraft server to connect to. This extension provides a Dev Service which automatically starts a modded server in a container, but the container needs to be built first.
+
 ### Build the minecraft server container
+
+Accept the eula by changing eula=false to eula=true in the file `modded-minecraft/run/eula.txt`.
 
 ```bash
 cd modded-minecraft
