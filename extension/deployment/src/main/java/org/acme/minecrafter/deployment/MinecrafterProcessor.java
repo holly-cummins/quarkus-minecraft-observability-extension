@@ -12,6 +12,7 @@ import io.quarkus.deployment.builditem.DevServicesResultBuildItem;
 import io.quarkus.deployment.builditem.FeatureBuildItem;
 import io.quarkus.deployment.builditem.LaunchModeBuildItem;
 import io.quarkus.deployment.builditem.LogHandlerBuildItem;
+import io.quarkus.deployment.dev.devservices.DevServicesConfig;
 import io.quarkus.deployment.dev.devservices.GlobalDevServicesConfig;
 import io.quarkus.resteasy.reactive.spi.ExceptionMapperBuildItem;
 import jakarta.ws.rs.Priorities;
@@ -91,7 +92,7 @@ class MinecrafterProcessor {
                 Exception.class.getName(), Priorities.USER + 100, true);
     }
 
-    @BuildStep(onlyIfNot = IsNormal.class, onlyIf = GlobalDevServicesConfig.Enabled.class)
+    @BuildStep(onlyIfNot = IsNormal.class, onlyIf = DevServicesConfig.Enabled.class)
     public DevServicesResultBuildItem createContainer(LaunchModeBuildItem launchMode) {
         final int minecraftGamePort = 25565;
         final int minecraftApiPort = 8081;
