@@ -13,7 +13,6 @@ import io.quarkus.deployment.builditem.FeatureBuildItem;
 import io.quarkus.deployment.builditem.LaunchModeBuildItem;
 import io.quarkus.deployment.builditem.LogHandlerBuildItem;
 import io.quarkus.deployment.dev.devservices.DevServicesConfig;
-import io.quarkus.deployment.dev.devservices.GlobalDevServicesConfig;
 import io.quarkus.resteasy.reactive.spi.ExceptionMapperBuildItem;
 import jakarta.ws.rs.Priorities;
 import org.acme.minecrafter.runtime.HelloRecorder;
