@@ -32,7 +32,7 @@ public class MinecraftService {
 
     public void log(String message) {
         try {
-            client.target(minecrafterConfig.baseURL)
+            client.target(minecrafterConfig.baseURL())
                   .path("observability/log")
                   .request(MediaType.TEXT_PLAIN)
                   .post(Entity.text(message));
@@ -48,10 +48,10 @@ public class MinecraftService {
 
     private void invokeMinecraftSynchronously(String path) {
         try {
-            String response = client.target(minecrafterConfig.baseURL)
+            String response = client.target(minecrafterConfig.baseURL())
                                     .path("observability/" + path)
                                     .request(MediaType.TEXT_PLAIN)
-                                    .post(Entity.text(minecrafterConfig.animalType))
+                                    .post(Entity.text(minecrafterConfig.animalType()))
                                     .readEntity(String.class);
 
             System.out.println("\uD83D\uDDE1️ [Minecrafter] Mod response: " + response);
