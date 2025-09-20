@@ -183,25 +183,26 @@ The minecraft server is on localhost right now, but it could be anywhere, so we'
 ```java
 package org.acme.minecrafter.runtime;
 
-import io.quarkus.runtime.annotations.ConfigItem;
 import io.quarkus.runtime.annotations.ConfigPhase;
 import io.quarkus.runtime.annotations.ConfigRoot;
+import io.smallrye.config.ConfigMapping;
+import io.smallrye.config.WithDefault;
 
-@ConfigMapping(prefix = "quarkus.minecrafter")
 @ConfigRoot(phase = ConfigPhase.RUN_TIME)
-public class MinecrafterConfig {
+@ConfigMapping(prefix = "quarkus.minecrafter")
+public interface MinecrafterConfig {
 
     /**
      * The minecraft server's observability base URL
      */
-    @ConfigItem(defaultValue = "http://localhost:8081/")
-    public String baseURL;
+    @WithDefault("http://localhost:8081/")
+    String baseURL();
 
     /**
      * The kind of animal we spawn
      */
-    @ConfigItem(defaultValue = "chicken")
-    public String animalType;
+    @WithDefault("chicken")
+    String animalType();
 }
 ```
 <!-- MARKDOWN-AUTO-DOCS:END -->
@@ -247,7 +248,7 @@ public class MinecraftService {
 
     public void log(String message) {
         try {
-            client.target(minecrafterConfig.baseURL)
+            client.target(minecrafterConfig.baseURL())
                   .path("observability/log")
                   .request(MediaType.TEXT_PLAIN)
                   .post(Entity.text(message));
@@ -263,10 +264,10 @@ public class MinecraftService {
 
     private void invokeMinecraftSynchronously(String path) {
         try {
-            String response = client.target(minecrafterConfig.baseURL)
+            String response = client.target(minecrafterConfig.baseURL())
                                     .path("observability/" + path)
                                     .request(MediaType.TEXT_PLAIN)
-                                    .post(Entity.text(minecrafterConfig.animalType))
+                                    .post(Entity.text(minecrafterConfig.animalType()))
                                     .readEntity(String.class);
 
             System.out.println("\uD83D\uDDE1️ [Minecrafter] Mod response: " + response);
