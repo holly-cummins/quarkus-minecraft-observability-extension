@@ -1,9 +1,9 @@
-name: Minecrafter
-#description: Minecrafter ...
+name: Observability with Minecraft
+description: Use Minecraft as an observability client for your Quarkus applications. Not an official Minecraft product. Not approved by or associated with Mojang or Microsoft.
 metadata:
-#  keywords:
-#    - minecrafter
+  keywords:
+    - observability
 #  guide: ...
-#  categories:
-#    - "miscellaneous"
-#  status: "preview"
+categories:
+  - "miscellaneous"
+status: "preview"
